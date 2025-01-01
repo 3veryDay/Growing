@@ -1,0 +1,1 @@
+sorted(strings, key = lambda x : x[1] if x else print("Empty"), x)

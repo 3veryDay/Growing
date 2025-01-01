@@ -1,0 +1,40 @@
+from collections import deque
+
+
+def solution(cards1, cards2, goal) :
+    cards1 = deque(cards1)
+    cards2 = deque(cards2)
+    goal = deque(goal)
+    while goal :
+        if cards1 :
+            c1 = cards1[0]
+        else:c1 = 0
+        
+        if cards2 :
+            c2 = cards2[0]
+        else:c2 = 0
+        
+        g = goal[0] 
+        
+        if g == c1 :
+            goal.popleft()
+            cards1.popleft()
+        
+        if g == c2 :
+            goal.popleft()
+            cards2.popleft()
+        #First No point : goal doesn't match both decks
+        if g!= c1 and g!= c2 :
+            return "No"
+        
+        #Second No point : no deck, but goal is left
+        if c1==0 and c2 ==0 and len(goal)!=0 :
+            return "No"
+        
+        if len(goal) == 0:
+            return "Yes"
+        
+    return "Something's not Right", cards1, cards2, goal
+        
+
+print(solution(["A", "D", "E"], ["B", "C"], ["A", "B", "C","D","E"]))
