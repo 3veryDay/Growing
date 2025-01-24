@@ -1,0 +1,50 @@
+#DFS 로 해야겠구나~ 라는 감이 이제야(3시간 경과 ) 잡혔음
+from collections import deque
+
+# 아니...! DFS는 무슨
+# 재귀야.
+# 재귀 좀 연습하자
+
+
+
+def solution(n):
+    q = deque()
+    answer = []
+    tops = [[k for k in reversed(range(n))], [], []]
+    # 계속해서 재귀에서 반복이 일어나고 있으니,
+    def move(top) :
+        possible_moves = []
+        for start in range(3) :
+            for end in range(3) :
+                if start==end : continue
+                if tops[start] :
+                    if not tops[end] or tops[end][-1] > tops[start][-1] :
+                        possible_moves.append([start,end])
+        return possible_moves
+    
+    def dynamic() :
+        possible_moves = move(tops)
+        for moves in possible_moves :
+            q.append(moves)
+        
+        while q :
+            print(q)
+            moves =q.popleft()
+            start, end = moves[0], moves[1]
+            tops[end].append(tops[start].pop())
+            next_moves = moves(tops)
+            for next in next_moves :
+                if next[0] != end and next[1] != start :
+                    q.append(next)
+                    # result.append(next)
+                
+            
+            
+            
+    dynamic()
+    
+    
+    
+    return answer
+
+print(solution(2))
