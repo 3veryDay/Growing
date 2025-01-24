@@ -1,0 +1,41 @@
+def solution(n):
+    answer = []
+    tops = [[k for k in reversed(range(n))], [], []]
+    def move(top) :
+        possible_moves = []
+        for i in range(3) :
+            for j in range(i+1,3) :
+                if i==j : continue
+                if tops[i] :
+                    if not tops[j] :
+                        possible_moves.append([i,j])
+                    elif tops[j][-1] >= tops[i][-1] :
+                        possible_moves.append([i,j])
+        return possible_moves
+
+    def dynamic(tops) :
+        if len(tops[2]) == n-1 :
+            answer.pop()
+            return answer
+            
+        
+        possible_moves = move(tops)
+        #moves => [[0,1], [0,2]]
+        for moves in possible_moves :
+            
+            #move_start = 0, move_end = 2
+            start, end = moves[0], moves[1]
+            
+            tops[end].append(tops[start].pop())
+            answer.append([moves[0]+1, moves[1] + 1])
+            dynamic(tops)
+            tops[start].append(tops[end].pop())
+            
+            
+    dynamic(tops)
+    
+    
+    
+    return answer
+
+print(solution(2))
