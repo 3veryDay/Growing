@@ -1,17 +1,13 @@
-#DFS 로 해야겠구나~ 라는 감이 이제야(3시간 경과 ) 잡혔음
-from collections import deque
-
-# 아니...! DFS는 무슨
-# 재귀야.
-# 재귀 좀 연습하자
-
+import copy
 
 
 def solution(n):
-    q = deque()
+    visited = []
+    before = [0,0]
     answer = []
     tops = [[k for k in reversed(range(n))], [], []]
     # 계속해서 재귀에서 반복이 일어나고 있으니,
+    before = [n,n]
     def move(top) :
         possible_moves = []
         for start in range(3) :
@@ -23,22 +19,31 @@ def solution(n):
         return possible_moves
     
     def dynamic() :
-        possible_moves = move(tops)
-        for moves in possible_moves :
-            q.append(moves)
-        
-        while q :
-            print(q)
-            moves =q.popleft()
-            start, end = moves[0], moves[1]
-            tops[end].append(tops[start].pop())
-            next_moves = moves(tops)
-            for next in next_moves :
-                if next[0] != end and next[1] != start :
-                    q.append(next)
-                    # result.append(next)
-                
+        print("1. dynamic tops 현 상황", tops)
+        if len(tops[2]) == n:
+            # all_of_the_answers.append(answer)
+            # Return True? 
+            return True
             
+        possible_moves = move(tops)
+        print("2. possible moves", possible_moves)
+        #moves => [[0,1], [0,2]]
+        #배열에서 순환하는 건 이렇게 간단하게 하기기
+        for start, end in possible_moves :
+            if start == before[1] and end == before[0] :
+                continue
+            print(f'3. tops : {tops} start : {start}, end : {end}')
+            tops[end].append(tops[start].pop())
+            answer.append([start + 1, end + 1])
+            
+            #재할당이 안된다. 
+            before[0], before[1] = start, end
+            ######################################## 이거 한줄로 모든게 다
+            if dynamic() :
+                return True
+            tops[start].append(tops[end].pop())
+            answer.pop()
+        return False    #모든 이동 경로 탐색 후 종료 조건 미달
             
             
     dynamic()
