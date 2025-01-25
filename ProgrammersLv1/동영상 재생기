@@ -1,0 +1,47 @@
+def solution(video_len, pos, op_start, op_end, commands):
+    video_len_sec = int(video_len.split(":"))
+    pos_sec = 60 * int(pos[:2]) + int(pos[3:])
+    op_start_sec = 60 * int(op_start[:2]) + int(op_start[3:])
+    op_end_sec = 60*int(op_end[:2]) + int(op_end[3:])
+    
+    def skip(sec) :
+        if op_start_sec <= sec <= op_end_sec :
+            return op_end_sec
+        else :
+            return sec
+    
+    def prev(sec) :
+        if sec >= 10 :
+            return skip(sec - 10)
+        else :
+            return skip(0)
+    
+    def next(sec) :
+        if sec + 10 >= video_len_sec :
+            return skip(video_len_sec)
+        else :
+            return skip(sec + 10)
+                    
+    for command in commands :
+        pos_sec = skip(pos_sec)
+        if command == 'next' :
+            pos_sec = next(pos_sec)
+        elif command == 'prev' :
+            pos_sec = prev(pos_sec)
+            
+            
+            
+            
+            
+            
+    answer = ''
+    if pos_sec // 60 < 10 :
+        answer +=("0" + str(pos_sec // 60))
+    else :
+        answer += (str(pos_sec//60))
+    answer += (":")
+    if pos_sec % 60 <10 :
+        answer += ("0" + str(pos_sec%60))
+    else : 
+        answer+= (str(pos_sec%60))
+    return answer
