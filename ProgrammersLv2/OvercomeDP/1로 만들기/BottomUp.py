@@ -17,10 +17,11 @@ def BottomUp(num) :
     #     else:
     #         dp[i] = dp[i-1] + 1 
     for i in range(4, num + 1) :
+        dp[i] = dp[i-1] + 1
         if i % 3 == 0 :
-            dp[i] = min(dp[i-1], dp[i//3])
+            dp[i] = min(dp[i], dp[i//3]+1)
         if i % 2 == 0 :
-            dp[i] = min(dp[i], dp[i//2])
+            dp[i] = min(dp[i], dp[i//2]+1)
 
     """
     굳이 3 조건을 다 나눌 필요가 없었음
