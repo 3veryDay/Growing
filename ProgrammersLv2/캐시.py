@@ -93,3 +93,22 @@ def solution(cacheSize, cities) :
                 idx += 1
             
     return time
+
+
+#다른 사람 풀이
+#deque(maxlen = 정수) 
+def solution(cacheSize, cities):
+    import collections
+    cache = collections.deque(maxlen=cacheSize)
+    #deque(maxlen = cacheSize) 이런 기능이 있습니다~ 
+    time = 0
+    for i in cities:
+        s = i.lower()
+        if s in cache:
+            cache.remove(s)
+            cache.append(s)
+            time += 1
+        else:
+            cache.append(s)
+            time += 5
+    return time
