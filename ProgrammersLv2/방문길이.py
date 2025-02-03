@@ -67,7 +67,34 @@ def solution(dirs):
 로 방향을 표현한 후,
 
 return len(s) // 2
+'''
 
 
+'''소름!
+def solution(dirs):
+    point = [0,0]
+    answer = set()
 
+    for _dirs in dirs:
+        if _dirs == 'U' and point[1]!=5:
+            point[1]+=1
+            nn = (point[0], point[1]-.5)
+        elif _dirs == 'D' and point[1]!=-5:
+            point[1]+=-1
+            nn = (point[0], point[1]+.5)
+        elif _dirs == 'R' and point[0]!=5:
+            point[0]+=1
+            nn = (point[0]-.5, point[1])
+        elif _dirs == 'L' and point[0]!=-5:
+            point[0]+=-1
+            nn = (point[0]+.5, point[1])
+        else: pass
+
+        answer.add(nn)
+
+    return len(answer)
+
+    중간 선을 0.5로 표현...!! 
+    대박 아이디어.
+    
 '''
