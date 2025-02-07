@@ -4,6 +4,7 @@
 "while 문을 활용해 연속적으로 pop하는 방식이 자주 나온다."
 
 ## 변수
+
 sum대신 total, totalSum, accumulated, overall, summation
 
 나온 문제:
@@ -13,6 +14,8 @@ sum대신 total, totalSum, accumulated, overall, summation
 - 하나의 배열안에서 고정된(혹은 고정되지 않은) 끝과 끝을 따질 때
 
 나온 문제:
+
+
 -----
 
 ## functools
