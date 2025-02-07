@@ -18,7 +18,7 @@ sum대신 total, totalSum, accumulated, overall, summation
 
 -----
 <details>
-<summary> ## functools </summary>
+<summary> functools </summary>
   
 1. cmp_to_key
 res = sorted(기존 함수, key = **cmp_to*key**(비교 함수) )
@@ -38,7 +38,7 @@ res = sorted(기존 함수, key = **cmp_to*key**(비교 함수) )
 </details>
 
 <details>
-<summary> ## itertools  </summary>
+<summary> itertools  </summary>
   
 
 1. Permutations
