@@ -17,9 +17,9 @@ sum대신 total, totalSum, accumulated, overall, summation
 
 
 -----
-
-## functools
-
+<details>
+<summary> ## functools </summary>
+  
 1. cmp_to_key
 res = sorted(기존 함수, key = **cmp_to*key**(비교 함수) )
 비교함수 (a, b ) < 0 -> a가 b보다 앞에, 그대로 유지
@@ -34,3 +34,28 @@ res = sorted(기존 함수, key = **cmp_to*key**(비교 함수) )
 
 나온 문제:
 <https://school.programmers.co.kr/learn/courses/30/lessons/42746#>
+
+</details>
+
+<details>
+<summary> ## itertools  </summary>
+  
+
+1. Permutations
+  Permutationns(대상 집합, 몇개 선정)
+
+
+나온 문제 :
+<https://school.programmers.co.kr/learn/courses/30/lessons/42839#>
+</details>
+
+------
+집합
+<details>
+  <summary> 집합 연산</summary>
+ 합집합 = |
+
+ 나온 문제 :
+ <https://school.programmers.co.kr/learn/courses/30/lessons/42839#>
+  
+</details>
