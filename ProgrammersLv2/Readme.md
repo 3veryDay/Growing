@@ -15,6 +15,12 @@ sum대신 total, totalSum, accumulated, overall, summation
 
 나온 문제:
 
+## Greedy
+
+- 스택 사용한 그리디
+나온 문제 :
+<https://school.programmers.co.kr/learn/courses/30/lessons/42883#>
+
 
 -----
 <details>
