@@ -75,3 +75,6 @@ res = sorted(기존 함수, key = **cmp_to*key**(비교 함수) )
  <https://school.programmers.co.kr/learn/courses/30/lessons/42839#>
   
 </details>
+
+## 오류문 해석
+
