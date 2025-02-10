@@ -53,7 +53,6 @@ res = sorted(기존 함수, key = **cmp_to*key**(비교 함수) )
 
 나온 문제 :
 <https://school.programmers.co.kr/learn/courses/30/lessons/42839#>
-</details>
 
 2. chain
   여러개의 리터러블을 하나의 리터러블로 연결해주는 기능
@@ -62,9 +61,12 @@ res = sorted(기존 함수, key = **cmp_to*key**(비교 함수) )
 ( + 로 연결하는 것보다 효율적이다.)
 나온 문제 : 
 <https://school.programmers.co.kr/learn/courses/30/lessons/68645>
+</details>
 
 ------
-집합
+
+## 집합
+
 <details>
   <summary> 집합 연산</summary>
  합집합 = |
