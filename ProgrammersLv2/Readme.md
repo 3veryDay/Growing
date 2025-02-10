@@ -55,6 +55,14 @@ res = sorted(기존 함수, key = **cmp_to*key**(비교 함수) )
 <https://school.programmers.co.kr/learn/courses/30/lessons/42839#>
 </details>
 
+2. chain
+  여러개의 리터러블을 하나의 리터러블로 연결해주는 기능
+
+**새로운 리스트를 생성하는게 아니라, 순차적으로 리스트를 참조하는 것이므로, 공간 효율성이 좋다.**
+( + 로 연결하는 것보다 효율적이다.)
+나온 문제 : 
+<https://school.programmers.co.kr/learn/courses/30/lessons/68645>
+
 ------
 집합
 <details>
