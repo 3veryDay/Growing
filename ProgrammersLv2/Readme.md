@@ -2,6 +2,10 @@
 
 sum대신 total, totalSum, accumulated, overall, summation
 
+## 1차 배열
+
+나온 문제 :
+<https://school.programmers.co.kr/learn/courses/30/lessons/92341>
 
 ## 2차 배열
 
