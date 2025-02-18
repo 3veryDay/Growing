@@ -23,9 +23,20 @@ sum대신 total, totalSum, accumulated, overall, summation
 나온 문제 :
 <https://school.programmers.co.kr/learn/courses/30/lessons/42883#>
 
+## DP
+
 
 -----
 <details>
+<summary> heapq</summary>
+
+나온 문제 : <https://school.programmers.co.kr/learn/courses/30/lessons/155651>
+
+<summary> collections </summary>
+
+1. counter
+나온 문제 : <https://school.programmers.co.kr/learn/courses/30/lessons/152996>
+  
 <summary> functools </summary>
   
 1. cmp_to_key
