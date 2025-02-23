@@ -25,6 +25,10 @@ sum대신 total, totalSum, accumulated, overall, summation
 
 ## DP
 
+## 규칙 찾기
+
+나온 문제 :
+<https://school.programmers.co.kr/learn/courses/30/lessons/12899#>
 
 -----
 <details>
