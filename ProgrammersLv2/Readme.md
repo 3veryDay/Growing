@@ -99,3 +99,6 @@ res = sorted(기존 함수, key = **cmp_to*key**(비교 함수) )
 
 int(--)는 소숫점을 버리는 거거
 
+# 다시 풀어 보자 문제들
+1. https://school.programmers.co.kr/learn/courses/30/lessons/12899#
+
