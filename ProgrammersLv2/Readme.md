@@ -90,7 +90,14 @@ res = sorted(기존 함수, key = **cmp_to*key**(비교 함수) )
 
  나온 문제 :
  <https://school.programmers.co.kr/learn/courses/30/lessons/42839#>
-  
+
+`교집합` = &
+- 중복된 것 없애기 위해서 사용
+
+
+나온 문제 :
+<https://school.programmers.co.kr/learn/courses/30/lessons/42862#>
+
 </details>
 
 ## 오류문 해석
