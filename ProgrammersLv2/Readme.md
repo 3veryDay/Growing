@@ -39,8 +39,10 @@ sum대신 total, totalSum, accumulated, overall, summation
 <summary> collections </summary>
 
 1. counter
-나온 문제 : <https://school.programmers.co.kr/learn/courses/30/lessons/152996>
-  
+- 정말 간단한 문제이지만, 중복이 있어서, 시간 복잡도가 높아서 문제가 안 풀리는 경우가 있음. 단순한 문제에서 중복 값의 가능성이 있다면 한번 생각해보기를.
+
+나온 문제 :
+<https://school.programmers.co.kr/learn/courses/30/lessons/152996>
 <summary> functools </summary>
   
 1. cmp_to_key
