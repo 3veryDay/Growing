@@ -8,6 +8,11 @@
 나온 문제 : 
 <https://school.programmers.co.kr/learn/courses/30/lessons/17679>
 
+## DICT
+
+dict의 요소 순으로 정렬을 원할 시에는, dic.items()을 꺼내서 정렬을 해야 한다.
+sorted_dict = dict(sorted(data.items(), key=lambda x: x[1])) (reverse = True 별도)
+
 ## Sliding Window
 
 - 하나의 배열안에서 고정된(혹은 고정되지 않은) 끝과 끝을 따질 때
@@ -121,6 +126,10 @@ reduce(함수, 반복가능한_객체, 초기값)  # 초기값은 선택사항
 </details>
 
 ## 오류문 해석
+- TypeError: 'itertools.combinations' object cannot be interpreted as an integer
+  list, dic 등이 int 처럼 더해지거나, dic의 요소로 사용되고 있다.
+- ValueError: max() arg is an empty sequence
+  max(iterable) 에서 iterable이 비어있다. 이럴 때에는 if iterable : 한다음에 max 처리
 
 ## 런타임 에러
 
