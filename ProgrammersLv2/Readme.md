@@ -102,6 +102,10 @@ res = sorted(기존 함수, key = **cmp_to*key**(비교 함수) )
 
 ## 오류문 해석
 
+## 런타임 에러
+
+- TypeError: 'int' object is not callable => 곱하기 했는데, () () 이런식으로, 중간에 곱하기 기호 제외하고 했음.
+
 ## 사소하지만 중요
 
 int(--)는 소숫점을 버리는 거거
