@@ -1,7 +1,3 @@
-#### 변수
-
-sum대신 total, totalSum, accumulated, overall, summation
-
 ## 1차 배열
 
 나온 문제 :
@@ -11,6 +7,7 @@ sum대신 total, totalSum, accumulated, overall, summation
 
 나온 문제 : 
 <https://school.programmers.co.kr/learn/courses/30/lessons/17679>
+
 ## Sliding Window
 
 - 하나의 배열안에서 고정된(혹은 고정되지 않은) 끝과 끝을 따질 때
@@ -32,6 +29,21 @@ sum대신 total, totalSum, accumulated, overall, summation
 
 -----
 <details>
+<summary> all </summary>
+all() 함수는 반복 가능한 (iterable) 객체의 모든 요소가 True인지 확인하는 함수
+
+- 모든 요소가 `True` => `True` 반환
+- 하나라도 `False` => `False` 반환
+- 빈 리스트 => `True` 반환
+
+all(조건문 for --)
+all(num % 2 == 0 for num in numbers) 
+all(num % 2 for num in numbers) 하면 완전 다른 느낌
+0만 False, 나머지 숫자는 True를 의미하기에, 
+
+all(num % 2 == 0 for num in numbers) => numbers 배열의 모든 숫자가 짝수이어야지, True
+all(num % 2 for num in numbers) => numbers 배열의 모든 숫자가 홀수이어야지 , True
+  
 <summary> heapq</summary>
 
 나온 문제 : <https://school.programmers.co.kr/learn/courses/30/lessons/155651>
@@ -57,8 +69,14 @@ res = sorted(기존 함수, key = **cmp_to*key**(비교 함수) )
 |복잡한 정렬 기준이 있을 때| key를 직접 사용하는게 효율적|
 |sorted, min, max 사용 가능 | |
 
+2. reduce
+reduce(함수, 반복가능한_객체, 초기값)  # 초기값은 선택사항
+`함수`는 두개의 값을 받아서 하나로 줄이는 연산을 수행하는 함수(ex : gcd, min, max)
+-> list에서 최대공약수를 구하거나 최소공배수를 구할 때 사용할 수 있음.
+
 나온 문제:
-<https://school.programmers.co.kr/learn/courses/30/lessons/42746#>
+<https://school.programmers.co.kr/learn/courses/30/lessons/42746#> - cmp_to_key
+<https://school.programmers.co.kr/learn/courses/30/lessons/135807> - reduce
 
 </details>
 
@@ -114,4 +132,8 @@ int(--)는 소숫점을 버리는 거거
 
 # 다시 풀어 보자 문제들
 1. https://school.programmers.co.kr/learn/courses/30/lessons/12899#
+
+## 변수
+
+sum대신 total, totalSum, accumulated, overall, summation
 
