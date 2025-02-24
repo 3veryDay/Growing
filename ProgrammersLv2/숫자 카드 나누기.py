@@ -5,24 +5,25 @@ def solution(arrayA, arrayB) :
     #    10                         
     def check(array, num) :
         status = 0  #시작 전
-        for a in array :
+        # for a in array :
             
-            if a % num == 0 :
-                if status == 0 or status == 1:
-                    status = 1 # 나눌 수 있음!
-                    continue
-                else :
-                    status = -1 #이도저아님.
-                    return status
-            else :
-                if status == 0 or status == 2 :
-                    status = 2 #나눌 수 없음!
-                    continue
-                else :
-                    status = -1 
-                    return status
-        return status
-    
+        #     if a % num == 0 :
+        #         if status == 0 or status == 1:
+        #             status = 1 # 나눌 수 있음!
+        #             continue
+        #         else :
+        #             status = -1 #이도저아님.
+        #             return status
+        #     else :
+        #         if status == 0 or status == 2 :
+        #             status = 2 #나눌 수 없음!
+        #             continue
+        #         else :
+        #             status = -1 
+        #             return status
+        # return status
+        if all(a % num for a in array ) :
+            return 
     
     answer = 0
     
@@ -63,6 +64,45 @@ def solution(arrayA, arrayB) :
                     break
     return tmp
         
-        
+
+'''
+정상 답안
+'''
+from math import gcd
+from functools import reduce
+
+def check(arrayA, arrayB):
+    gcd_A = reduce(gcd, arrayA, arrayA[0])
+    factors = [i for i in range(1, gcd_A//2+1) if not gcd_A % i]
+    factors.append(gcd_A)
+    for factor in factors[::-1]:
+        if all(i % factor for i in arrayB):
+            return gcd_A
+    return 0
+
+def solution(arrayA, arrayB):
+    return max(check(arrayA, arrayB), check(arrayB, arrayA))
+
+'''
+내가 풀어보기
+'''
+from math import gcd
+from functools import reduce
+
+def check(array1,array2) :
+    
+    # array1에서 최대공약수를 구하기
+    gcd_a = reduce(gcd, array1, array1[0])
+    #factors에 최대 공약수의 모든 약수 구하기
+    factors = [i for i in range(1, (gcd_a//2) + 1 ) if not gcd_a % i]
+    factors.append(gcd_a)
+    # 큰 약수부터
+    for factor in factors[::-1] :
+        if all(a % factor for a in array2) :
+            return factor
+    return 0
+def solution(arrayA, arrayB) :
+    return max(check(arrayA, arrayB), check(arrayB, arrayA))
+    
     
     
