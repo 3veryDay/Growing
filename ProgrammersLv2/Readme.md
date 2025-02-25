@@ -1,12 +1,44 @@
+## BFS
+
+ - visited 을 사용해서, 한번 방문했으면 끝
+ - deque를 사용
+ - while q : 사용
+
+
+🥇 최단 거리 탐색
+
+🥇 모든 노드를 같은 깊이에서 탐색(네트워크 연결 상태)
+
+🥇 탐색 노드 많지만, 탐색 깊이가 얕을 때 
+
+이외
+
+🥈 2D 행렬에서 영역 탐색 문제
+
+🥈 최소 단계로 특정 상태 변경 문제 (ex. 한 글자씩 바꿔서 목표 단어 만들기)
+
+🥈 위상 정렬(순서가 있는 그래프 탐색) (ex. 주어진 조건을 만족하는 강의 순서 정하기)
+<details>
+  <summary>나온 문제🔦</summary>
+  
+<https://school.programmers.co.kr/learn/courses/30/lessons/154540>
+</details>
+
 ## 1차 배열
 
-나온 문제 :
+<details>
+  <summary>나온 문제🔦</summary>
+  
 <https://school.programmers.co.kr/learn/courses/30/lessons/92341>
+</details>
 
 ## 2차 배열
 
-나온 문제 : 
+<details>
+  <summary>나온 문제🔦</summary>
+  
 <https://school.programmers.co.kr/learn/courses/30/lessons/17679>
+</details>
 
 ## DICT
 
@@ -17,20 +49,30 @@ sorted_dict = dict(sorted(data.items(), key=lambda x: x[1])) (reverse = True 별
 
 - 하나의 배열안에서 고정된(혹은 고정되지 않은) 끝과 끝을 따질 때
 
-나온 문제:
+<details>
+  <summary>나온 문제🔦</summary>
+  
+</details>
 
 ## Greedy
 
 - 스택 사용한 그리디
-나온 문제 :
+
+<details>
+  <summary>나온 문제🔦</summary>
+  
 <https://school.programmers.co.kr/learn/courses/30/lessons/42883#>
+</details>
 
 ## DP
 
 ## 규칙 찾기
 
-나온 문제 :
+<details>
+  <summary>나온 문제🔦</summary>
+  
 <https://school.programmers.co.kr/learn/courses/30/lessons/12899#>
+</details>
 
 -----
 <details>
@@ -52,8 +94,12 @@ all(num % 2 for num in numbers) => numbers 배열의 모든 숫자가 홀수이�
 </details>
 <details>
 <summary> heapq</summary>
+<details>
+  <summary>나온 문제🔦</summary>
+  
+<https://school.programmers.co.kr/learn/courses/30/lessons/155651>
+</details>
 
-나온 문제 : <https://school.programmers.co.kr/learn/courses/30/lessons/155651>
 </details>
 
 
@@ -65,9 +111,14 @@ all(num % 2 for num in numbers) => numbers 배열의 모든 숫자가 홀수이�
 - `update()` → 개수 추가
 - `subtract()` → 개수 빼기
 - `del counter['p']`  → 'p' 제거
-나온 문제 :
+
+
+<details>
+  <summary>나온 문제🔦</summary>
+  
 <https://school.programmers.co.kr/learn/courses/30/lessons/152996>
 <https://school.programmers.co.kr/learn/courses/30/lessons/72411>
+</details>
 
 </details>
 
@@ -91,10 +142,13 @@ reduce(함수, 반복가능한_객체, 초기값)  # 초기값은 선택사항
 `함수`는 두개의 값을 받아서 하나로 줄이는 연산을 수행하는 함수(ex : gcd, min, max)
 -> list에서 최대공약수를 구하거나 최소공배수를 구할 때 사용할 수 있음.
 
-나온 문제:
+
+<details>
+  <summary>나온 문제🔦</summary>
 <https://school.programmers.co.kr/learn/courses/30/lessons/42746#> - cmp_to_key
 <https://school.programmers.co.kr/learn/courses/30/lessons/135807> - reduce
-
+</details>
+  
 </details>
 
 <details>
@@ -104,17 +158,22 @@ reduce(함수, 반복가능한_객체, 초기값)  # 초기값은 선택사항
 1. Permutations
   `Permutationns(대상 집합, 몇개 선정)`
 
-
-나온 문제 :
+<details>
+  <summary>나온 문제🔦</summary>
 <https://school.programmers.co.kr/learn/courses/30/lessons/42839#>
+</details>
 
 2. chain
   여러개의 리터러블을 하나의 리터러블로 연결해주는 기능
 
 **새로운 리스트를 생성하는게 아니라, 순차적으로 리스트를 참조하는 것이므로, 공간 효율성이 좋다.**
 ( + 로 연결하는 것보다 효율적이다.)
-나온 문제 : 
+
+
+<details>
+  <summary>나온 문제🔦</summary>
 <https://school.programmers.co.kr/learn/courses/30/lessons/68645>
+</details>
 </details>
 
 ------
@@ -125,16 +184,18 @@ reduce(함수, 반복가능한_객체, 초기값)  # 초기값은 선택사항
   <summary> 집합 연산</summary>
  합집합 = |
 
- 나온 문제 :
+<details>
+  <summary>나온 문제🔦</summary>
  <https://school.programmers.co.kr/learn/courses/30/lessons/42839#>
+</details>
 
 `교집합` = &
 - 중복된 것 없애기 위해서 사용
 
-
-나온 문제 :
+<details>
+  <summary>나온 문제🔦</summary>
 <https://school.programmers.co.kr/learn/courses/30/lessons/42862#>
-
+</details>
 </details>
 
 ## 오류문 해석
