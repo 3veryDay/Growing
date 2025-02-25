@@ -10,7 +10,7 @@
 
 ## DICT
 
-dict의 요소 순으로 정렬을 원할 시에는, dic.items()을 꺼내서 정렬을 해야 한다.
+dict의 요소 순으로 정렬을 원할 시에는, `dic.items()`을 꺼내서 정렬을 해야 한다.
 sorted_dict = dict(sorted(data.items(), key=lambda x: x[1])) (reverse = True 별도)
 
 ## Sliding Window
@@ -35,7 +35,8 @@ sorted_dict = dict(sorted(data.items(), key=lambda x: x[1])) (reverse = True 별
 -----
 <details>
 <summary> all </summary>
-all() 함수는 반복 가능한 (iterable) 객체의 모든 요소가 True인지 확인하는 함수
+  
+`all()` 함수는 반복 가능한 (iterable) 객체의 모든 요소가 True인지 확인하는 함수
 
 - 모든 요소가 `True` => `True` 반환
 - 하나라도 `False` => `False` 반환
@@ -48,22 +49,33 @@ all(num % 2 for num in numbers) 하면 완전 다른 느낌
 
 all(num % 2 == 0 for num in numbers) => numbers 배열의 모든 숫자가 짝수이어야지, True
 all(num % 2 for num in numbers) => numbers 배열의 모든 숫자가 홀수이어야지 , True
-  
+</details>
+<details>
 <summary> heapq</summary>
 
 나온 문제 : <https://school.programmers.co.kr/learn/courses/30/lessons/155651>
+</details>
 
+
+<details>
 <summary> collections </summary>
 
 1. counter
-- 정말 간단한 문제이지만, 중복이 있어서, 시간 복잡도가 높아서 문제가 안 풀리는 경우가 있음. 단순한 문제에서 중복 값의 가능성이 있다면 한번 생각해보기를.
-
+- `most_common()`  → 가장 흔한 값 하나가 아닌, count가 많은 순으로 set으로 반환
+- `update()` → 개수 추가
+- `subtract()` → 개수 빼기
+- `del counter['p']`  → 'p' 제거
 나온 문제 :
 <https://school.programmers.co.kr/learn/courses/30/lessons/152996>
+<https://school.programmers.co.kr/learn/courses/30/lessons/72411>
+
+</details>
+
+<details>
 <summary> functools </summary>
   
 1. cmp_to_key
-res = sorted(기존 함수, key = **cmp_to*key**(비교 함수) )
+res = sorted(기존 함수, key = `cmp_to*key`(비교 함수) )
 비교함수 (a, b ) < 0 -> a가 b보다 앞에, 그대로 유지
 비교함수 (a, b ) == 0 -> 두 값의 순서 유지
 ##### (양수)비교함수 (a, b ) > 0 -> b가 a보다 앞에, 순서 바꾸기
@@ -90,7 +102,7 @@ reduce(함수, 반복가능한_객체, 초기값)  # 초기값은 선택사항
   
 
 1. Permutations
-  Permutationns(대상 집합, 몇개 선정)
+  `Permutationns(대상 집합, 몇개 선정)`
 
 
 나온 문제 :
