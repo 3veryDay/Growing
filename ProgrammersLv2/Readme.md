@@ -75,6 +75,11 @@ sorted_dict = dict(sorted(data.items(), key=lambda x: x[1])) (reverse = True 별
 </details>
 
 -----
+
+<details>
+ <summary> math</summary>
+ -factorial
+</details>
 <details>
 <summary> all </summary>
   
