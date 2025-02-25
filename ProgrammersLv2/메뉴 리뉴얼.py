@@ -26,8 +26,47 @@ def solution(orders, course):
     answer.sort()   
     return answer
 
-#TypeError: 'itertools.combinations' object cannot be interpreted as an integer
 
-#alueError: max() arg is an empty sequence
+from collections import defaultdict, Counter
+from itertools import combinations 
+def solution(orders, course):
+    answer = []
+    for num in course :
+        combin = []
+        pre = []
+        for order in orders :
+            combin.extend(combinations(''.join(sorted(list(order))), num))
+        lst = Counter(combin).most_common()
+        print(lst)
+        pre += [k for k, v in lst if v > 1 and v == lst[0][1]]
+        
+        for p in pre :
+            answer.append(''.join(p))
+        
+        
+            
+    answer.sort()   
+    return answer
 
-#sorted_dict = dict(sorted(data.items(), key=lambda x: x[1]))
+# my answer
+from collections import defaultdict, Counter
+from itertools import combinations 
+def solution(orders, course):
+    answer = []
+    for num in course :
+        combin = []
+        pre = []
+        for order in orders :
+            combin.extend(combinations(''.join(sorted(list(order))), num))
+        lst = Counter(combin).most_common()
+        print(lst)
+        pre += [k for k, v in lst if v > 1 and v == lst[0][1]]
+        
+        for p in pre :
+            answer.append(''.join(p))
+        
+        
+            
+    answer.sort()   
+    return answer
+
