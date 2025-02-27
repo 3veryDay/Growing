@@ -1,3 +1,30 @@
+## 탐색
+
+#### 🚀 이분 탐색(Binary Search)
+
+ **정렬된 데이터에서 특정 값을 빠르게 찾는 알고리즘**
+ 
+ 
+ 📌 핵심 개념
+ 
+1. **정렬된 범위를 반으로 나눠서 탐색**
+   - 보통 left, right, mid = (left+right)//2 로 진행
+   - mid을 기준으로 찾고자 하는 값이 왼쪽에 있는지, 오른쪽에 있는지 판단
+2. **탐색 범위를 반으로 줄임**
+   - 오른쪽에 있으면 left = mid + 1
+   - 왼쪽에 있으면 right = mid -1
+     
+👩‍👩‍👧‍👧 이런 상황에서도 이분 탐색이 쓰이더라
+
+- 싸울 수 있는 최대 라운드(BFS로 하면 시간 복잡도가 너무 크기에)
+
+<details>
+  <summary>나온 문제🔦</summary>
+  
+<https://school.programmers.co.kr/learn/courses/30/lessons/142085>
+</details>
+
+
 ## BFS
 
  - visited 을 사용해서, 한번 방문했으면 끝
@@ -65,6 +92,14 @@ sorted_dict = dict(sorted(data.items(), key=lambda x: x[1])) (reverse = True 별
 </details>
 
 ## DP
+
+## HEAP
+-DFS말고 HEAP
+<details>
+  <summary>나온 문제🔦</summary>
+  
+<https://school.programmers.co.kr/learn/courses/30/lessons/142085>
+</details>
 
 ## 규칙 찾기
 
