@@ -77,6 +77,58 @@ sorted_dict = dict(sorted(data.items(), key=lambda x: x[1])) (reverse = True 별
 -----
 
 <details>
+<summary> re 모듈 </summary>
+
+ 1. `re.**match**(pattern, string)` : 문자열의 시작 부분이 패턴과 일치하는지 확인
+ 2. `re.**search**(pattern, string)` : 문자열 **어디든** 패턴과 일치하는 부분이 있는지 확인
+ 3. `re.**findall**(pattern, string)` : 패턴과 **일치하는 모든 부분을 LIST으로 반환**
+ 4. `re.**finditer**(pattern, string)` : 패턴과 일치하는 부분을 iterator로 반환
+ 5. `re.**sub**(pattern, repl, string)` : 패턴과 일치하는 부분을 `repl`로 치환
+ 6. `re.**split**(pattern, string)` : 패턴을 기준으로 문자열을 **분할하여 LIST로 반환**
+
+기본적으로 사용하는 건 : **s = re.search(r"\d{4}-\d{2}-\d{2}", text)**
+
+#### 메타 문자
+
+1. 숫자 관련
+ - `\d` → 숫자 (0~9)
+   예: \d+ → "2025년"에서 2025만 매칭됨
+ - `\D` → 숫자가 아닌 문자
+   예: \D+ → "2025년"에서 년만 매칭됨
+
+2. 문자 관련
+ - `\w` → 문자 + 숫자 + _(언더스코어)
+   [a-zA-Z_]와 같음,
+   예 : \w+ → "Hello_123!"에서 "Hello_123" 매칭됨
+ - `\W` → \w가 아닌 문자(공백, 특수 문자 등)
+   예 : \w+ → "Hello_123!"에서 "!" 매칭됨
+
+3. 공백
+ - `\s` → 공백
+ - `\S` → 공백이 아닌 문자
+
+4. 기타 특수 문자
+
+   문장 : text = "I love cats and categories."
+   
+- `\.` → 아무 문자
+  예 : "a.c" 에서 "abc", "a#c" 매칭
+- `^` → 문자열 시작
+  예 : ^Hello 에서 "Hello world"에서만 매칭
+- `$` → 문자열 끝
+  예 : World$ 에서 "Hello World"에서만 매칭
+- `\b` → 단어 경계
+  예 : \bcat\b 에서 cat은 매칭되지만 category는 매칭 안
+
+
+<details>
+  <summary>나온 문제🔦</summary>
+  <https://school.programmers.co.kr/learn/courses/30/lessons/67257>
+</details>
+
+</details>
+
+<details>
  <summary> math</summary>
  -factorial
 </details>
@@ -212,7 +264,8 @@ reduce(함수, 반복가능한_객체, 초기값)  # 초기값은 선택사항
 ## 런타임 에러
 
 - TypeError: 'int' object is not callable => 곱하기 했는데, () () 이런식으로, 중간에 곱하기 기호 제외하고 했음.
-
+- 
+- SyntaxError: unexpected EOF while parsing - 안 닫힌 괄호가 있을 수 있음
 ## 사소하지만 중요
 
 int(--)는 소숫점을 버리는 거거
