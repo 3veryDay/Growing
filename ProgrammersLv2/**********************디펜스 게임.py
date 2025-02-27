@@ -1,23 +1,48 @@
-def solution(n, k, enemy):
-    answer = 0
+import heapq
+def solution(n,k, enemy) :
+    left, right = 0, len(enemy)
+    while left <= right :
+        mid = (left + right) // 2
+        heap = []
+        goon = n
+        skill = k
+        
+        for i in range(mid) :
+            heapq.heappush(heap, -enemy[i])
+            goon -= enemy[i]
+            
+            if goon < 0 :
+                if skill > 0 :
+                    goon += -heapq.heappop(heap)
+                    skill -= 1
+                else :
+                    right = mid - 1
+                    break
+        else :
+            left = mid + 1
+    return right
+                
 
-    #DFS를 재귀적으로 구현할 때는 보통 방문을 먼저 처리한 후 재귀 호출을 진행하는 것이 일반적이야.
-    def dfs(byeong, moo, idx, cnt) :
+
+
+# 이건 합계: 34.4 / 100.0
+def solution(n,k, enemy) :
+    answer = 0
+    def dfs(n,k, idx) :
         nonlocal answer
-        
         if idx >= len(enemy) :
-            if cnt > answer :
-                answer = cnt
-        if moo == 0 :
-            if idx == len(enemy) or enemy[idx] > byeong :
-                if cnt > answer :
-                    answer = cnt
-        
-        
-        #지금 idx와 연결된 노드를 재귀적으로 방문
-        if moo != 0 :
-            dfs(byeong, moo-1, idx+1, cnt+1)
-        if idx < len(enemy) and enemy[idx] <= byeong :
-            dfs(byeong - enemy[idx], moo, idx+1, cnt + 1)
-    (dfs(n,k,0,0))
+            answer= len(enemy)
+            return
+        if k == 0 and enemy[idx] > n:
+            answer = max(answer, idx )
+            return
+            
+        else :
+            if idx < len(enemy) and enemy[idx] <= n :
+                dfs(n - enemy[idx], k, idx + 1)
+            if k != 0 :
+                dfs(n, k-1, idx+ 1)
+    dfs(n,k,0)
     return answer
+
+
