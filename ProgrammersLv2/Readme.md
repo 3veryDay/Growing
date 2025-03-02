@@ -114,6 +114,7 @@ sorted_dict = dict(sorted(data.items(), key=lambda x: x[1])) (reverse = True 별
 </details>
 
 -----
+## 메서드, 모듈
 
 <details>
 <summary> re 모듈 </summary>
