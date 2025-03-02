@@ -332,7 +332,7 @@ reduce(함수, 반복가능한_객체, 초기값)  # 초기값은 선택사항
 
 int(--)는 소숫점을 버리는 거거
 
-# 다시 풀어 보자 문제들
+## 다시 풀어 보자 문제들
 1. https://school.programmers.co.kr/learn/courses/30/lessons/12899#
 
 ## 변수
