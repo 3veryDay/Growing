@@ -49,8 +49,12 @@
   <summary>나온 문제🔦</summary>
   
 <https://school.programmers.co.kr/learn/courses/30/lessons/154540>
+<https://school.programmers.co.kr/learn/courses/30/lessons/159993>
 </details>
 
+시행착오😫
+
+while q 가 한번에 끝나면, visited을 미리 처리한 게 아닐까 
 ## 1차 배열
 
 <details>
@@ -298,9 +302,9 @@ reduce(함수, 반복가능한_객체, 초기값)  # 초기값은 선택사항
 
 ## 런타임 에러
 
-- TypeError: 'int' object is not callable => 곱하기 했는데, () () 이런식으로, 중간에 곱하기 기호 제외하고 했음.
-- 
-- SyntaxError: unexpected EOF while parsing - 안 닫힌 괄호가 있을 수 있음
+- TypeError: 'int' object is not callable 👉 곱하기 했는데, () () 이런식으로, 중간에 곱하기 기호 제외하고 했음.
+- TypeError: 'list' object cannot be interpreted as an integer 👉 for i in range(maps(**여기에 배열을 넣었을 수 있음**)) 
+- SyntaxError: unexpected EOF while parsing 👉 안 닫힌 괄호가 있을 수 있음
 ## 사소하지만 중요
 
 int(--)는 소숫점을 버리는 거거
