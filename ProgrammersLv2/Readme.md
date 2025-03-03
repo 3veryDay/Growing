@@ -302,6 +302,17 @@ reduce(함수, 반복가능한_객체, 초기값)  # 초기값은 선택사항
 
 ------
 
+## 좌표
+
+✅수학적 최적화 (원의 방정식 활용)
+
+원에서 특정 좌표 구할 때, brute force가 아닌, 한가지 좌표를 고정하고 다른 좌표의 최소, 최대를 구하기.
+위 방법은 불필요한 연산이 많으므로, 특정 𝑥에 대해 가능한 𝑦 값을 구하는 방식으로 최적화할 수 있습니다.
+<details>
+  <summary>나온 문제🔦</summary>
+ <https://school.programmers.co.kr/learn/courses/30/lessons/140107#>
+</details>
+  
 ## 집합
 
 <details>
