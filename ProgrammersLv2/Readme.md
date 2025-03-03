@@ -73,6 +73,10 @@ while q 가 한번에 끝나면, visited을 미리 처리한 게 아닐까
 
 ## DICT
 
+✅ dict의 key로는 **immutable type**만 사용 가능하다. 즉, `tuple () ` 은 사용 가능하다.
+
+❌ 이유: 리스트는 변경 가능(mutable)하기 때문
+
 dict의 요소 순으로 정렬을 원할 시에는, `dic.items()`을 꺼내서 정렬을 해야 한다.
 sorted_dict = dict(sorted(data.items(), key=lambda x: x[1])) (reverse = True 별도)
 
