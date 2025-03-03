@@ -175,6 +175,8 @@ sorted_dict = dict(sorted(data.items(), key=lambda x: x[1])) (reverse = True 별
 <details>
  <summary> math</summary>
  -factorial
+ 
+ ✅ ceil, floor : 올림, 내림
 </details>
 <details>
 <summary> all </summary>
