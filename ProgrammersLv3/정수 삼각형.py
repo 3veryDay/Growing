@@ -23,5 +23,32 @@ def solution(triangle):
             q.append([level + 1, idx , total])
             q.append([level + 1, idx+1 , total])
     return answer
+'''
 
-  ''' 효율성 0 '''
+dP로 갈라치기를 한다고 해서 효율적인게 아니다. 
+q에서 넣고, 빼는 것이 효율적이지 않다.
+이 방식은 최적의 경로를 찾을 때 탐색해야 할 경우의 수가 너무 많아 성능이 좋지 않음.
+
+DP는 bottom-up 방식과, top-down 방식이 있음. 
+dp를 했는데, bottom up이 잘 안 먹힌다면, top down을 시도해볼 필요가 있다. 
+'''
+  ''' 효율성 upgrade '''
+def solution(triangle) :
+    bottom = len(triangle) - 1
+    bottom_idx = len(triangle[bottom])
+    dp = [[0]*len(triangle[idx]) for idx in range(len(triangle))]
+    for last_level in range(0, bottom_idx) :
+        dp[bottom][last_level] = triangle[bottom][last_level] 
+    for level in range(bottom-1, -1, -1) :
+        for idx in range(len(triangle[level])) :
+            dp[level][idx] = max(dp[level+1][idx] , dp[level+1][idx+1]) + triangle[level][idx]
+    return dp[0][0]
+
+
+def solution(triangle) :
+    bottom = len(triangle) - 1
+    bottom_idx = len(triangle[bottom])
+    for level in range(bottom-1, -1, -1) :
+        for idx in range(len(triangle[level])) :
+            triangle[level][idx] = max(triangle[level+1][idx] , triangle[level+1][idx+1]) + triangle[level][idx]
+    return triangle[0][0]
