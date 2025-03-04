@@ -22,6 +22,7 @@
   <summary>나온 문제🔦</summary>
   
 <https://school.programmers.co.kr/learn/courses/30/lessons/142085>
+<https://school.programmers.co.kr/learn/courses/30/lessons/340212>
 </details>
 
 
