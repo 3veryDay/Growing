@@ -104,10 +104,16 @@ sorted_dict = dict(sorted(data.items(), key=lambda x: x[1])) (reverse = True 별
 
 ## HEAP
 -DFS말고 HEAP
+
+heapq의 heappop, heappush등
+max와 min을 동시에 관리해야 할 때는 max_heap, min_heap을 두개 관리하면서
+max_heap에는 -num을 붙여서 큰 수가 작은 수가 되어서 먼저 pop되도록!
+
 <details>
   <summary>나온 문제🔦</summary>
   
 <https://school.programmers.co.kr/learn/courses/30/lessons/142085>
+<https://school.programmers.co.kr/learn/courses/30/lessons/42628>
 </details>
 
 ## 규칙 찾기
