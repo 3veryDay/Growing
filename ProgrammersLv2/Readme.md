@@ -66,10 +66,15 @@ while q 가 한번에 끝나면, visited을 미리 처리한 게 아닐까
 
 ## 2차 배열
 
+
+
+-원이 나올 때는, 이중 for문이 아닌, for문을 하나 두고, y좌표 x좌표 구하는게 시간 효율성이 좋다. 
+
 <details>
   <summary>나온 문제🔦</summary>
   
 <https://school.programmers.co.kr/learn/courses/30/lessons/17679>
+<https://school.programmers.co.kr/learn/courses/30/lessons/181187#>
 </details>
 
 ## DICT
@@ -350,6 +355,7 @@ reduce(함수, 반복가능한_객체, 초기값)  # 초기값은 선택사항
 
 ## 런타임 에러
 
+- ValueError: math domain error 👉 sqrt 안에 들어간 수가 음수일 때
 - TypeError: 'int' object is not callable 👉 곱하기 했는데, () () 이런식으로, 중간에 곱하기 기호 제외하고 했음.
 - TypeError: 'list' object cannot be interpreted as an integer 👉 for i in range(maps(**여기에 배열을 넣었을 수 있음**)) 
 - SyntaxError: unexpected EOF while parsing 👉 안 닫힌 괄호가 있을 수 있음
