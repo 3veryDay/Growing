@@ -65,12 +65,10 @@ while q 가 한번에 끝나면, visited을 미리 처리한 게 아닐까
 
 <details>
   <summary>나온 문제🔦</summary>
+ 
 <https://school.programmers.co.kr/learn/courses/30/lessons/12952>
 </details>
 
-시행착오😫
-
-while q 가 한번에 끝나면, visited을 미리 처리한 게 아닐까 
 ## 1차 배열
 
 <details>
