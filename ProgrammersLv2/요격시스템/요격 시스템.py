@@ -34,3 +34,32 @@ def solution(targets) :
             for loc in range(targets[idx][0], targets[idx][1]) :
                 q.append([missiles+[loc], idx + 1])
     return answer
+
+
+def solution(targets):
+    targets.sort()
+    bound = []
+    bound.append(targets[0][1])
+    answer = 1
+    
+    for s,e in targets[1:] :
+        #bound가 시작 전에
+        if bound[-1] < s :
+            bound.pop()
+            bound.append(e)
+            answer += 1
+        #bound가 끝 넘어서
+        if bound[-1] > e :
+            bound.append(e)
+            answer += 1
+            
+        if s < bound[-1] <= e :
+            print(bound, answer)
+            continue
+        if s == bound[-1] :
+            bound.pop()
+            bound.append(e)
+            answer += 1
+        print(bound, answer)
+    
+    return answer - len(bound) + 1
