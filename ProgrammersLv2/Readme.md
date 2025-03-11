@@ -110,12 +110,17 @@ sorted_dict = dict(sorted(data.items(), key=lambda x: x[1])) (reverse = True 별
 
 ## Greedy
 
+- 그리디는 보통 bfs등 다른 알고리즘으로 접근이 가능하지만, 시간 복잡도가 매우 높을 수 있음.
+- 다른 알고리즘으로도 가능하지만, 모든 경우의 수를 탐색하지 않고, 특정 규칙을 찾으면 되는 문제에서 적합하다.
+- 매 순간 최적의 선택이 **최종적으로 최적의 선택**인 경우
 - 스택 사용한 그리디
+
 
 <details>
   <summary>나온 문제🔦</summary>
   
 <https://school.programmers.co.kr/learn/courses/30/lessons/42883#>
+<https://school.programmers.co.kr/learn/courses/30/lessons/181188>
 </details>
 
 ## DP
