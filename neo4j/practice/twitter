@@ -1,0 +1,10 @@
+Setup
+This is for Neo4j version: 4.0
+
+The database is also available on https://demo.neo4jlabs.com:7473
+
+Username "twitter", password: "twitter", database: "twitter"
+
+Rendered guide available via: :play https://guides.neo4j.com/sandbox/twitter/index.html
+
+Unrendered guide: documentation/twitter.neo4j-browser-guide
