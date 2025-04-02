@@ -123,3 +123,131 @@
 | 인터벌 타이머 ↔ 음악 연동 | 1.5일 | 중상 |
 | Spotify SDK 연동 및 디버깅 | 1.5일 | 상 |
 | UI/UX 마무리 + 예외처리 | 0.5일 | 중 |
+\
+
+
+
+좋아! 차근차근 네가 말한 **4가지 개선 포인트**를 하나씩 해결해보자. 그에 맞게 **개선된 코드도 함께 제공**할게.
+
+---
+
+## ✅ 1. hover 안 되는 문제 (리스트)
+
+> 🔍 문제 원인: Tailwind `hover:` 스타일은 `li`에서도 **정상 작동**함. 다만 다음을 확인해야 함:
+
+### ✅ 해결 방법
+- `li` 자체에 `hover:`가 들어갔는지 확인
+- 리스트 항목에 **배경색 변화** 같은 효과를 줘야 눈에 띔
+
+### ✅ 개선 코드
+
+```jsx
+<li
+  key={track.id}
+  onClick={() => setTrackUri(uri)}
+  className={`cursor-pointer px-2 py-1 rounded transition-colors duration-150
+    hover:bg-gray-200 ${uri === trackUri ? 'bg-green-100 font-semibold' : ''}`}
+>
+  🎵 {track.name} - {track.artists.map(a => a.name).join(', ')}
+</li>
+```
+
+- `transition-colors duration-150` → 부드럽게 hover 효과
+- `hover:bg-gray-200` → 좀 더 명확한 색으로 변경
+
+---
+
+## ✅ 2. 앨범 커버 크기 조절 (너무 큼)
+
+> 🔍 `w-40`은 10rem (약 160px)이라 클 수 있음
+
+### ✅ 개선 코드 (너가 말한 1/5 사이즈로)
+
+```jsx
+<img
+  src={trackInfo.album.images[0].url}
+  alt="앨범 커버"
+  className="mt-2 w-20 rounded shadow" // ✅ w-20 = 5rem = 약 80px
+/>
+```
+
+> 필요 시 `w-16`(64px), `w-12`(48px) 등으로 더 줄일 수 있어
+
+---
+
+## ✅ 3. 재생이 안 되는 이유
+
+재생이 안 되는 경우는 대표적으로 아래 중 하나야:
+
+### 🔍 체크리스트
+- [ ] **프리미엄 계정**인가? (Web Playback SDK는 프리미엄만 가능)
+- [ ] `deviceId`가 **정상 설정**되었는가?
+- [ ] `trackUri`가 바뀐 후 재생 요청이 제대로 전송되었는가?
+
+### ✅ 개선 팁
+`controlPlayback('play')` 시점에 console.log로 `trackUri`와 `deviceId`를 출력해봐:
+
+```js
+if (action === 'play') {
+  console.log("🎯 재생 시도 - URI:", trackUri, "Device ID:", deviceId); // ✅ 로그 추가
+  body = JSON.stringify({
+    track_uri: trackUri,
+    device_id: deviceId,
+  });
+}
+```
+
+### ✅ 보너스: 재생 API 예시 (백엔드 없이도 사용 가능)
+```ts
+PUT https://api.spotify.com/v1/me/player/play?device_id={deviceId}
+Body: {
+  uris: ["spotify:track:xxx"]
+}
+```
+
+---
+
+## ✅ 4. 후렴구(chorus) 시작을 알 수 있는 방법?
+
+> 🧠 Spotify 자체 API에는 후렴구(chorus) 타임 정보는 제공되지 않아.  
+다만 다음과 같은 **대체 방법**이 있어:
+
+### 🔧 방법 1: [Spotify Audio Analysis API](https://developer.spotify.com/documentation/web-api/reference/get-audio-analysis)
+- `/audio-analysis/{id}` 엔드포인트 사용
+- `"sections"` 배열을 분석해서 가장 에너지 높은 section을 "후렴"으로 추정 가능
+
+```js
+fetch(`https://api.spotify.com/v1/audio-analysis/${trackId}`, {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+})
+  .then(res => res.json())
+  .then(data => {
+    const sections = data.sections;
+    const chorusCandidate = sections.reduce((prev, curr) =>
+      curr.loudness_max > prev.loudness_max ? curr : prev
+    );
+    console.log("🎶 예상 후렴 시작 시점:", chorusCandidate.start);
+  });
+```
+
+### 💡 왜 이게 되냐면?
+- `"sections"`에 구간별 정보가 들어 있음 (`start`, `duration`, `loudness_max`, `tempo` 등)
+- 일반적으로 후렴은 가장 **크고** 눈에 띄는 구간임 → `loudness_max` 기준으로 추정 가능
+
+---
+
+## ✅ 정리
+
+| 문제 | 해결 방법 |
+|------|------------|
+| hover 안 됨 | Tailwind `hover:bg-gray-200` + `transition-colors` |
+| 앨범 커버 큼 | `w-20` 또는 `w-16`으로 줄이기 |
+| 재생 안 됨 | 프리미엄 여부 + `deviceId` 확인 + 로그 추가 |
+| 후렴 시작 | `audio-analysis` API의 `sections` 분석으로 추정 가능 |
+
+---
+
+필요하면 내가 후렴 추정까지 통합한 코드도 만들어줄게 😉  
+어떤 거 먼저 진행할까?
