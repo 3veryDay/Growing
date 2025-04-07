@@ -1,0 +1,127 @@
+# 한줄로 이어야 하고, DFS가 아니라 MST(minimum spanning tree)
+
+#시간 제한 1초 : 데이터 200000 = 2 * 10^5
+# nlogn -> 10^6, 여기도 nlogn까지 가능 
+# house, roads = map(int, input().split())
+# lst = [[0]*house for _ in range(house)]
+
+# original_cost = 0
+# # 거리 담은 map 작성
+# for road in range(roads) : 
+#     house1, house2, price = map(int, input().split())
+#     original_cost += price
+#     lst[house1][house2] = price
+#     lst[house2][house1] = price
+# end = input()
+# print(original_cost)
+
+# def move(start, visited, cost) :
+#     print(f'start:  {start} visited : {visited } cost {cost}')
+#     if sum(visited) == house :
+#         return cost
+#     ans = float('inf')
+#     for neighbor in range(house) :
+        
+#         if lst[start][neighbor] :
+#             if visited[neighbor] == 0 :
+#                 cost += lst[start][neighbor]
+#                 visited[neighbor] = 1
+#                 ans = min(move(neighbor, visited, cost), ans)
+#                 cost -= lst[start][neighbor]
+#                 visited[neighbor] = 0
+#     return ans
+
+# answer = float('inf')      
+# for starting_house in range(house ) :
+#     cost = 0 
+#     visited = [0] * house
+#     visited[starting_house] = 1
+#     answer = min(answer, move(starting_house, visited, 0))
+#     print("end of for ==> answer ", {answer})
+# print(original_cost - answer)
+
+    
+    
+# MST - > Kruskal's Alogorithm
+#모든 간선을 비용 순으로 정렬한 후, 사이클을 만들지 않도록 하나씩 선택
+
+from collections import deque
+import sys
+input = sys.stdin.readline
+house, roads = map(int, input().split())
+lst = [[0]*house for _ in range(house)]
+maps = []
+original_cost = 0
+# 거리 담은 map 작성
+for road in range(roads) : 
+    house1, house2, price = map(int, input().split())
+    original_cost += price
+    
+    maps.append([price, house1, house2])
+maps.sort(key = lambda x : x[0])
+maps = deque(maps)
+end = input()
+# print(original_cost)
+cost = 0
+visited = [0]*house
+#유니언 파인드드
+parent = [i for i in range(house)] #자기 자신이 부모모
+def find(x) :
+    if x != parent[x] :
+        parent[x] = find(parent[x])
+    return parent[x]
+
+def union(h1, h2) :
+    h1_root = find(h1)
+    h2_root = find(h2)
+    if h1_root!=h2_root :
+        parent[h1_root] = h2_root  
+        
+          
+while maps :
+    price, house1, house2 = maps.popleft()
+    
+    if find(house1) != find(house2) :
+        union(house1, house2)
+        cost+= price
+
+print(original_cost - cost)
+
+
+import sys
+input = sys.stdin.readline
+
+def find(x):
+    if parent[x] != x:
+        parent[x] = find(parent[x])
+    return parent[x]
+
+def union(a, b):
+    root_a = find(a)
+    root_b = find(b)
+    if root_a != root_b:
+        parent[root_b] = root_a
+
+while True:
+    house, roads = map(int, input().split())
+    if house == 0 and roads == 0:
+        break
+
+    edges = []
+    original_cost = 0
+
+    for _ in range(roads):
+        h1, h2, price = map(int, input().split())
+        edges.append((price, h1, h2))
+        original_cost += price
+
+    edges.sort()
+    parent = [i for i in range(house)]
+
+    cost = 0
+    for price, a, b in edges:
+        if find(a) != find(b):
+            union(a, b)
+            cost += price
+
+    print(original_cost - cost)
