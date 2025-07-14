@@ -84,3 +84,32 @@ Linux에서는 대표적으로 **GRUB** 하고 **LILO**가 있음.
 |/run/| 부팅 이후 시스템의 실행 중 프로세스, 로그인한 사용자와 같은 런타임 데이터 포함|
 |/sys/| 핫플러그 장치를 위한 sysfs 가상 파일 시스템을 통해 장치 정보 제공  == /proc와 유사 |
 
+# GRUB
+관련해서는 많이 안 나옴
+
+# systemd
+
+기존 SysV init 대체하기 위한 시스템 및 서비스를 위한 Manager 역할
+- LGPL 라이선스
+- 기존 sysV init 와 호환
+- 병렬 서비스 시작
+- 시작 순서 제어
+- UNIT 단위로 관리
+
+### systemd 구조
+
+##### UNIT
+systemd는 시스템 관리하기 위해서 다양한 유닛 제공
+|UNIT|확장자|설명|
+|--|--|-----------|
+|Service Unit|.service| 서비스/데몬|
+|Target Unit|.target|다수를 하나의 그룹으로 관리|
+|Device Unit|.device|커널이 인식 가능한 장치 관리|
+|Mount Unit |.mount|파일 시스템 마운트 포인트|
+|Path Unit|.path|파일 시스템의 파일과 디렉터리|
+|Socket Unit|.socket|IPC, 프로세스 통신|
+|Timer Unit|.timer|systemd 타이머|
+
+|경로| 설명 |
+|--- |--------|
+|/usr/lib/systemd/system/
