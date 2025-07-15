@@ -112,4 +112,89 @@ systemd는 시스템 관리하기 위해서 다양한 유닛 제공
 
 |경로| 설명 |
 |--- |--------|
-|/usr/lib/systemd/system/
+|/usr/lib/systemd/system/| RPM으로 설치된 유닛이 여기있음|
+|/run/systemd/system|실행 시 생성된 유닛, 위의 경로보다 이 경로가 더 우선시됨|
+|/etc/systemd/system/|systemctl enable 명령을 통해 생성된 유닛, 위보다 이게 더 우선시 됨|
+
+유닛 파일의 구조는 [Unit] [Unit type] [Install]로 구성된다.
+- [UNIT] : 공통 사항
+  - Description : 유닛 설명
+  - Documentation : 유닛 설명 있는 URIs
+  - After : 유닛이 시작할 순사
+  - Requires : 의존 관계
+  - Wants : REquires보다 약한 의존성
+- [Unit Type] :특성
+  - Service 유닛은 [Service]
+    - ExecStart : 실행 시 실행할 명령어, 스크립트
+    - ExecStop : 유닛 중지 시 실행할 명령어, 스크립트
+- [Install] : systemctl enable/disable 로 유닛을 제어할 때 필요한 정보
+  - RequireBy : 의존 유닛 지정
+  - WantedBy : 약한 의존 목록
+
+ ##### Systemd의 주요 명령어
+ ```bash
+# service start
+systemctl start name.service
+
+# service stop
+systemctl stop name.service
+
+# service restart
+systemctl restart name.service
+
+#서비스 실행 중인 경우만 재시작
+systemctl try-restart name.service
+
+# 서비스 설정 갱신
+systemctl reload name.service
+
+# 서비스 상태 확인
+systemctl status name.service
+
+# 서비스 목록 확인
+systemctl list-units--type service --all
+```
+타켓 유닛
+```bash
+# default target 확인
+systemctl get-default
+
+# loaded target check
+systemctl list-units --type target
+
+# change default target
+systemctl set-default name.target
+#########################################################################
+# current target change                                                 #
+systemctl isolate name.target                                           #
+#########################################################################
+
+# 복구 모드 변경
+systemctl rescue
+
+# 응급 모드 변경
+systemctl emergency
+```
+
+전원 관리
+```bash
+# halt
+systemctl halt
+
+systemctl poweroff
+
+systemctl reboot
+
+systemctl suspend
+
+systemctl hibernate
+
+# 하이버네이드 및 서스팬드
+systemctl hyrid-sleep
+```
+
+<mark> systemctl -H root@linuxserver.example.com status httpd.service</mark>
+--host 또는 -H 옵션을 사용해서 <mark> 원격지 sshd 서비스 연결 </mark>
+
+### 파일 시스템
+
