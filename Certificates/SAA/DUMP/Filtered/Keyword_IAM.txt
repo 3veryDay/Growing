@@ -1,0 +1,285 @@
+17] A company is implementing a new business application. The application runs on two Amazon EC2 instances and uses an Amazon S3 bucket for document storage. A solutions architect needs to ensure that the EC2 instances can access the S3 bucket.
+What should the solutions architect do to meet this requirement?
+
+A. Create an IAM role that grants access to the S3 bucket. Attach the role to the EC2 instances
+
+An IAM role is an AWS resource that allows you to delegate access to AWS resources and services. You can create an IAM role that grants access to the S3 bucket and then attach the role to the EC2 instances. This will allow the EC2 instances to access the S3 bucket and the documents stored within it.
+
+36] 
+
+
+
+
+
+
+
+
+37] A company recently launched a variety of new workloads on Amazon EC2 instances in its AWS account. The company needs to create a strategy to access and administer the instances remotely and securely. The company needs to implement a repeatable process that works with native AWS services and follows the AWS Well-Architected Framework.
+Which solution will meet these requirements with the LEAST operational overhead?
+
+B. Attach the appropriate IAM role to each existing instance and new instance. Use AWS Systems Manager Session Manager to establish a remote SSH session.
+
+With AWS Systems Manager Session Manager, you can manage your Amazon Elastic Compute Cloud (Amazon EC2) instances, edge devices, on-premises servers, and virtual machines (VMs). You can use either an interactive one-click browser-based shell or the AWS Command Line Interface (AWS CLI). It provides secure and auditable node management without the need to open inbound ports, maintain bastion hosts, or manage SSH keys.
+
+208] A company needs to move data from an Amazon EC2 instance to an Amazon S3 bucket. The company must ensure that no API calls and no data are routed through public internet routes. Only the EC2 instance can have access to upload data to the S3 bucket.
+
+Which solution will meet these requirements?
+
+A. Create an interface VPC endpoint for Amazon S3 in the subnet where the EC2 instance is located. Attach a resource policy to the S3 bucket to only allow the EC2 instance’s IAM role for access.
+
+Interface VPC endpoints for Amazon S3 (powered by AWS PrivateLink) allow communication between resources in your VPC and Amazon S3 without relying on public internet routes. It provides a secure and private connection.
+By creating an interface VPC endpoint for Amazon S3 in the subnet where the EC2 instance is located, you ensure that the data doesn't travel over the public internet.
+Attaching a resource policy to the S3 bucket allows you to control access and restrict it to the IAM role associated with the EC2 instance, ensuring only authorized entities can upload data to the bucket.
+
+222] A company has hired an external vendor to perform work in the company’s AWS account. The vendor uses an automated tool that is hosted in an AWS account that the vendor owns. The vendor does not have IAM access to the company’s AWS account.
+
+How should a solutions architect grant this access to the vendor?
+
+A. Create an IAM role in the company’s account to delegate access to the vendor’s IAM role. Attach the appropriate IAM policies to the role for the permissions that the vendor requires.
+
+IAM roles allow you to delegate access to resources in your AWS account to another AWS account. In this case, you can create a role in your account and grant the vendor's IAM role permission to assume that role.
+
+By doing this, the vendor can use temporary security credentials obtained by assuming the role to access resources in your account. This ensures that the vendor doesn't need IAM credentials from your account.
+
+223] A company has deployed a Java Spring Boot application as a pod that runs on Amazon Elastic Kubernetes Service (Amazon EKS) in private subnets. The application needs to write data to an Amazon DynamoDB table. A solutions architect must ensure that the application can interact with the DynamoDB table without exposing traffic to the internet.
+
+Which combination of steps should the solutions architect take to accomplish this goal? (Choose two.)
+
+A. Attach an IAM role that has sufficient privileges to the EKS pod. Most Voted
+
+D. Create a VPC endpoint for DynamoDB. Most Voted
+
+This IAM role should have the necessary permissions to interact with DynamoDB. You can attach the IAM role to the pod using Kubernetes service account annotations or other mechanisms.
+
+By creating a VPC endpoint for DynamoDB, you allow your EKS pods to access DynamoDB directly within the AWS network without traversing the public internet. This enhances security and reduces the risk of exposure.
+
+232] A company runs demonstration environments for its customers on Amazon EC2 instances. Each environment is isolated in its own VPC. The company’s operations team needs to be notified when RDP or SSH access to an environment has been established.
+
+B. Configure the EC2 instances with an IAM instance profile that has an IAM role with the AmazonSSMManagedInstanceCore policy attached.
+
+The correct option for notifying the operations team when RDP or SSH access to an environment has been established is:
+
+C. Publish VPC flow logs to Amazon CloudWatch Logs. Create required metric filters. Create an Amazon CloudWatch metric alarm with a notification action for when the alarm is in the ALARM state.
+
+Here's why:
+
+VPC Flow Logs:** VPC flow logs capture information about the IP traffic going to and from network interfaces in your VPC. This includes information about accepted and rejected connections. To monitor RDP or SSH access, you can analyze these logs.
+
+CloudWatch Logs:** By publishing VPC flow logs to CloudWatch Logs, you can analyze the logs using metric filters to extract relevant information.
+
+Metric Filters:** Create metric filters to match the patterns corresponding to RDP or SSH access in the CloudWatch Logs. For example, you can create metric filters that look for specific keywords or patterns related to RDP or SSH connections.
+CloudWatch Metric Alarm:** Set up CloudWatch metric alarms based on the metric filters. When the alarm is triggered (indicating that RDP or SSH access has been detected), it can take a notification action, such as sending a notification to the operations team via Amazon SNS.
+
+239] A solutions architect needs to design a new microservice for a company’s application. Clients must be able to call an HTTPS endpoint to reach the microservice. The microservice also must use AWS Identity and Access Management (IAM) to authenticate calls. The solutions architect will write the logic for this microservice by using a single AWS Lambda function that is written in Go 1.x.
+
+Which solution will deploy the function in the MOST operationally efficient way?
+
+A. Create an Amazon API Gateway REST API. Configure the method to use the Lambda function. Enable IAM authentication on the API.
+
+This option is specifically designed for creating APIs and provides features such as authentication, request validation, and more. It allows you to create a REST API, configure a method to invoke the Lambda function, and enable IAM authentication. This provides a dedicated and managed API endpoint for clients to call securely.
+
+289] A company has an AWS Lambda function that needs read access to an Amazon S3 bucket that is located in the same AWS account.
+
+Which solution will meet these requirements in the MOST secure manner?
+
+B. Apply an IAM role to the Lambda function. Apply an IAM policy to the role to grant read access to the S3 bucket.
+
+An IAM role provides temporary credentials to the Lambda function to access AWS resources. The function does not have persistent credentials.
+The IAM policy grants least privilege access by specifying read access only to the specific S3 bucket needed. Access is not granted to all S3 buckets.
+If the Lambda function is compromised, the attacker would only gain access to the one specified S3 bucket. They would not receive broad access to resources.
+
+319] A company has hundreds of Amazon EC2 Linux-based instances in the AWS Cloud. Systems administrators have used shared SSH keys to manage the instances. After a recent audit, the company’s security team is mandating the removal of all shared keys. A solutions architect must design a solution that provides secure access to the EC2 instances.
+
+Which solution will meet this requirement with the LEAST amount of administrative overhead?
+
+A. Use AWS Systems Manager Session Manager to connect to the EC2 instances.
+
+AWS Systems Manager Session Manager: AWS Systems Manager provides a service called Session Manager that allows you to securely connect to your EC2 instances without the need for an external bastion host or direct access to the instances. Session Manager uses IAM roles for authentication and provides an auditable and controlled way to access instances.
+
+325] A company is hosting a web application from an Amazon S3 bucket. The application uses Amazon Cognito as an identity provider to authenticate users and return a JSON Web Token (JWT) that provides access to protected resources that are stored in another S3 bucket.
+
+Upon deployment of the application, users report errors and are unable to access the protected content. A solutions architect must resolve this issue by providing proper permissions so that users can access the protected content.
+
+Which solution meets these requirements?
+
+A. Update the Amazon Cognito identity pool to assume the proper IAM role for access to the protected content.
+
+Amazon Cognito Identity Pool: When users authenticate through Amazon Cognito, they assume roles that determine their access to AWS resources. By updating the Cognito identity pool, you can configure it to assume the proper IAM role that has the necessary permissions to access the protected content stored in the S3 bucket.
+
+IAM Role Permissions: The IAM role associated with the identity pool should have the required permissions (e.g., S3 getObject permissions) to access the protected content in the S3 bucket.
+
+368] A solutions architect wants all new users to have specific complexity requirements and mandatory rotation periods for IAM user passwords.
+
+What should the solutions architect do to accomplish this?
+
+A. Set an overall password policy for the entire AWS account.
+
+Amazon Web Services (AWS) allows you to set an account-wide password policy using AWS Identity and Access Management (IAM). This policy defines the rules and requirements for all IAM users in the AWS account. It's a centralized approach to enforce security measures consistently across all users. In this case, the solutions architect can set the specific complexity requirements and mandatory rotation periods by configuring the password policy at the AWS account level.
+
+371] A company needs to create an Amazon Elastic Kubernetes Service (Amazon EKS) cluster to host a digital media streaming application. The EKS cluster will use a managed node group that is backed by Amazon Elastic Block Store (Amazon EBS) volumes for storage. The company must encrypt all data at rest by using a customer managed key that is stored in AWS Key Management Service (AWS KMS).
+
+Which combination of actions will meet this requirement with the LEAST operational overhead? (Choose two.)
+
+C. Enable EBS encryption by default in the AWS Region where the EKS cluster will be created. Select the customer managed key as the default key.
+
+D. Create the EKS cluster. Create an IAM role that has a policy that grants permission to the customer managed key. Associate the role with the EKS cluster.
+
+EBS encryption is set regionally. AWS account is global but it does not mean EBS encryption is enable by default at account level. default EBS encryption is a regional setting within your AWS account. Enabling it in a specific region ensures that all new EBS volumes created in that region are encrypted by default, using either the default AWS managed key or a customer managed key that you specify.
+
+387] A new employee has joined a company as a deployment engineer. The deployment engineer will be using AWS CloudFormation templates to create multiple AWS resources. A solutions architect wants the deployment engineer to perform job activities while following the principle of least privilege.
+
+Which combination of actions should the solutions architect take to accomplish this goal? (Choose two.)
+
+D. Create a new IAM user for the deployment engineer and add the IAM user to a group that has an IAM policy that allows AWS CloudFormation actions only.
+
+E. Create an IAM role for the deployment engineer to explicitly define the permissions specific to the AWS CloudFormation stack and launch stacks using that IAM role.
+
+This ensures that the IAM user has the necessary permissions for AWS CloudFormation but not unnecessary permissions for other AWS services.
+
+IAM roles are more suitable for temporary elevated permissions needed during AWS CloudFormation stack operations. The deployment engineer can assume the role when required, limiting their permissions to only what is needed for those specific actions.
+
+395] An IAM user made several configuration changes to AWS resources in their company's account during a production deployment last week. A solutions architect learned that a couple of security group rules are not configured as desired. The solutions architect wants to confirm which IAM user was responsible for making changes.
+
+Which service should the solutions architect use to find the desired information?
+
+C. AWS CloudTrail
+
+AWS CloudTrail is a service provided by Amazon Web Services (AWS) that allows you to monitor and log AWS account activity. It records API calls made on your AWS account, capturing information such as the identity of the caller, the time of the API call, the source IP address, the request parameters, and the response elements returned by the AWS service.
+
+403] A developer has an application that uses an AWS Lambda function to upload files to Amazon S3 and needs the required permissions to perform the task. The developer already has an IAM user with valid IAM credentials required for Amazon S3.
+
+What should a solutions architect do to grant the permissions?
+
+D. Create an IAM execution role with the required permissions and attach the IAM role to the Lambda function.
+
+o grant the necessary permissions to an AWS Lambda function to upload files to Amazon S3, a solutions architect should create an IAM execution role with the required permissions and attach the IAM role to the Lambda function. This approach follows the principle of least privilege and ensures that the Lambda function can only access the resources it needs to perform its specific task.
+
+412] An image-hosting company stores its objects in Amazon S3 buckets. The company wants to avoid accidental exposure of the objects in the S3 buckets to the public. All S3 objects in the entire AWS account need to remain private.
+
+Which solution will meet these requirements?
+
+D. Use the S3 Block Public Access feature on the account level. Use AWS Organizations to create a service control policy (SCP) that prevents IAM users from changing the setting. Apply the SCP to the account.
+
+AWS Organizations allows you to create service control policies (SCPs) that set fine-grained permissions for member accounts. In this case, you can create an SCP that prevents IAM users from changing the S3 Block Public Access settings. Applying this SCP to the account ensures that the configured public access settings remain in place and cannot be altered by IAM users.
+
+418] A solutions architect needs to allow team members to access Amazon S3 buckets in two different AWS accounts: a development account and a production account. The team currently has access to S3 buckets in the development account by using unique IAM users that are assigned to an IAM group that has appropriate permissions in the account.
+
+The solutions architect has created an IAM role in the production account. The role has a policy that grants access to an S3 bucket in the production account.
+
+Which solution will meet these requirements while complying with the principle of least privilege?
+
+B. Add the development account as a principal in the trust policy of the role in the production account.
+
+By adding the development account as a principal in the trust policy of the IAM role in the production account, you enable IAM users in the development account to assume the role and gain temporary permissions to access the S3 bucket in the production account.
+
+This approach follows the principle of least privilege because it allows users in the development account to access only the specific resources (S3 bucket) defined in the trust policy of the IAM role.
+
+419] A company uses AWS Organizations with all features enabled and runs multiple Amazon EC2 workloads in the ap-southeast-2 Region. The company has a service control policy (SCP) that prevents any resources from being created in any other Region. A security policy requires the company to encrypt all data at rest.
+
+An audit discovers that employees have created Amazon Elastic Block Store (Amazon EBS) volumes for EC2 instances without encrypting the volumes. The company wants any new EC2 instances that any IAM user or root user launches in ap-southeast-2 to use encrypted EBS volumes. The company wants a solution that will have minimal effect on employees who create EBS volumes.
+
+Which combination of steps will meet these requirements? (Choose two.)
+
+C. Create an SCP. Attach the SCP to the root organizational unit (OU). Define the SCP to deny the ec2:CreateVolume action whenthe ec2:Encrypted condition equals false.
+
+E. In the Organizations management account, specify the Default EBS volume encryption setting.
+
+428] A serverless application uses Amazon API Gateway, AWS Lambda, and Amazon DynamoDB. The Lambda function needs permissions to read and write to the DynamoDB table.
+
+Which solution will give the Lambda function access to the DynamoDB table MOST securely?
+
+B. Create an IAM role that includes Lambda as a trusted service. Attach a policy to the role that allows read and write access to the DynamoDB table. Update the configuration of the Lambda function to use the new role as the execution role.
+
+IAM Role with Lambda as a Trusted Service: This approach follows the principle of least privilege. You create an IAM role that specifically grants the required permissions to access DynamoDB and makes Lambda a trusted service. This ensures that only Lambda functions associated with this role can assume it.
+
+442] A company stores several petabytes of data across multiple AWS accounts. The company uses AWS Lake Formation to manage its data lake. The company's data science team wants to securely share selective data from its accounts with the company's engineering team for analytical purposes.
+
+Which solution will meet these requirements with the LEAST operational overhead?
+
+D. Use Lake Formation tag-based access control to authorize and grant cross-account permissions for the required data to the engineering team accounts.
+
+Lake Formation allows you to use tag-based access control to authorize and grant permissions for data in the data lake. You can apply tags to databases and tables, and then use those tags to control access to the data.
+
+By applying tags to the relevant data and using tag-based access control, you can easily manage access to specific data sets without having to create additional IAM roles or copy data to a common account.
+
+455] A company uses AWS Organizations. The company wants to operate some of its AWS accounts with different budgets. The company wants to receive alerts and automatically prevent provisioning of additional resources on AWS accounts when the allocated budget threshold is met during a specific period.
+
+Which combination of solutions will meet these requirements? (Choose three.)
+
+
+B. Use AWS Budgets to create a budget. Set the budget amount under the Billing dashboards of the required AWS accounts.
+
+D. Create an IAM role for AWS Budgets to run budget actions with the required permissions.
+
+F. Add an alert to notify the company when each account meets its budget threshold. Add a budget action that selects the IAM identity created with the appropriate service control policy (SCP) to prevent provisioning of additional resources.
+
+476] A company is expecting rapid growth in the near future. A solutions architect needs to configure existing users and grant permissions to new users on AWS. The solutions architect has decided to create IAM groups. The solutions architect will add the new users to IAM groups based on department.
+
+Which additional action is the MOST secure way to grant permissions to the new users?
+
+C. Create an IAM policy that grants least privilege permission. Attach the policy to the IAM groups
+
+Creating an IAM policy that grants the least privilege required for the users' tasks is a security best practice. By attaching this policy to IAM groups, you ensure that new users added to these groups inherit the specific permissions defined in the policy.
+
+477] IAM
+
+484] A company wants to move from many standalone AWS accounts to a consolidated, multi-account architecture. The company plans to create many new AWS accounts for different business units. The company needs to authenticate access to these AWS accounts by using a centralized corporate directory service.
+
+Which combination of actions should a solutions architect recommend to meet these requirements? (Choose two.)
+
+A. Create a new organization in AWS Organizations with all features turned on. Create the new AWS accounts in the organization.
+
+E. Set up AWS IAM Identity Center (AWS Single Sign-On) in the organization. Configure IAM Identity Center, and integrate it with the company's corporate directory service.
+
+Create a new organization in AWS Organizations with all features turned on. Create the new AWS accounts in the organization. This is a foundational step for managing multiple AWS accounts in a consolidated manner.
+Option E: Set up AWS IAM Identity Center (AWS Single Sign-On) in the organization. Configure IAM Identity Center, and integrate it with the company's corporate directory service. AWS Single Sign-On (SSO) is designed to simplify and centralize authentication across multiple AWS accounts.
+
+503] A company runs an infrastructure monitoring service. The company is building a new feature that will enable the service to monitor data in customer AWS accounts. The new feature will call AWS APIs in customer accounts to describe Amazon EC2 instances and read Amazon CloudWatch metrics.
+
+What should the company do to obtain access to customer accounts in the MOST secure way?
+
+A. Ensure that the customers create an IAM role in their account with read-only EC2 and CloudWatch permissions and a trust policy to the company’s account.
+
+521] A retail company has several businesses. The IT team for each business manages its own AWS account. Each team account is part of an organization in AWS Organizations. Each team monitors its product inventory levels in an Amazon DynamoDB table in the team's own AWS account.
+
+The company is deploying a central inventory reporting application into a shared AWS account. The application must be able to read items from all the teams' DynamoDB tables.
+
+Which authentication option will meet these requirements MOST securely?
+
+C. In every business account, create an IAM role named BU_ROLE with a policy that gives the role access to the DynamoDB table and a trust policy to trust a specific role in the inventory application account. In the inventory account, create a role named APP_ROLE that allows access to the STS AssumeRole API operation. Configure the application to use APP_ROLE and assume the crossaccount role BU_ROLE to read the DynamoDB table.
+
+524] A company wants to analyze and troubleshoot Access Denied errors and Unauthorized errors that are related to IAM permissions. The company has AWS CloudTrail turned on.
+
+Which solution will meet these requirements with the LEAST effort?
+
+C. Search CloudTrail logs with Amazon Athena queries to identify the errors.
+
+Amazon Athena allows you to query data directly from S3 using standard SQL queries.
+CloudTrail logs can be stored in Amazon S3, and Athena makes it easy to analyze the logs using SQL queries.
+
+556] A solutions architect is using an AWS CloudFormation template to deploy a three-tier web application. The web application consists of a web tier and an application tier that stores and retrieves user data in Amazon DynamoDB tables. The web and application tiers are hosted on Amazon EC2 instances, and the database tier is not publicly accessible. The application EC2 instances need to access the DynamoDB tables without exposing API credentials in the template.
+
+What should the solutions architect do to meet these requirements?
+
+B. Create an IAM role that has the required permissions to read and write from the DynamoDB tables. Add the role to the EC2 instance profile, and associate the instance profile with the application instances.
+
+Option B is the correct choice because it leverages IAM roles and instance profiles for EC2 instances. By creating an IAM role with the necessary permissions to access DynamoDB and associating it with the EC2 instance profile, you can securely grant permissions to the EC2 instances without exposing API credentials in the CloudFormation template.
+
+634] A company collects 10 GB of telemetry data daily from various machines. The company stores the data in an Amazon S3 bucket in a source data account.
+
+The company has hired several consulting agencies to use this data for analysis. Each agency needs read access to the data for its analysts. The company must share the data from the source data account by choosing a solution that maximizes security and operational efficiency.
+
+Which solution will meet these requirements?
+
+C. Configure cross-account access for the S3 bucket to the accounts that the agencies own.
+
+By configuring cross-account access, you can grant permissions to specific AWS accounts (owned by the consulting agencies) to access the S3 bucket. This allows you to share the data securely with the agencies without making the data public or creating additional IAM users in the source data account.
+
+640] A company has an application workflow that uses an AWS Lambda function to download and decrypt files from Amazon S3. These files are encrypted using AWS Key Management Service (AWS KMS) keys. A solutions architect needs to design a solution that will ensure the required permissions are set correctly.
+
+Which combination of actions accomplish this? (Choose two.)
+
+B. Grant the decrypt permission for the Lambda IAM role in the KMS key's policy
+
+E. Create a new IAM role with the kms:decrypt permission and attach the execution role to the Lambda function.
+
