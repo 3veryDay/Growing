@@ -88,7 +88,10 @@ Linux에서는 대표적으로 **GRUB** 하고 **LILO**가 있음.
 관련해서는 많이 안 나옴
 
 # systemd
-
+**중요 내용**
+- 리눅스 커널이 실행하는 첫번째 프로세스
+- 온디댄드 액티베이션 기능
+- Service, Target, Socket와 같은 유닛 단위로 관
 기존 SysV init 대체하기 위한 시스템 및 서비스를 위한 Manager 역할
 - LGPL 라이선스
 - 기존 sysV init 와 호환

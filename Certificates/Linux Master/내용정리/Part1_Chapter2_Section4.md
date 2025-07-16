@@ -101,7 +101,7 @@ env
 
 ##### 셸 실행 방법
 1. ./hello.sh ( chmod 해야함)
-2. bash hello.sh
+2. bash hello.sh // sh hello.sh 등 앞에 존재하는 셸 들어가면 ㄱㅊ
 3. . hello.sh
 4. source hello.sh
 
