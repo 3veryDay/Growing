@@ -137,3 +137,34 @@ su [options] username
 - -m : 패스워드 변경까지 min days
 - -M : 패스워드 변경까지 max datys
 - -W : 만료 경고 메시지 보여줄 날짜 지정
+
+
+### 그룹 계정 관리
+
+##### groupadd
+`groupadd [op] groupname`
+- -f, --force : 그룹 생성(이미 있어도 ㄱㅊ)
+- -r, --system : 시스템 그룹 생성
+- -g, --gid GID :그룹의 양수 GID 지정, -o옵션 선택 안하면 유일한 값 설정
+- -o, --non-unique : 중복 GID 허용
+
+##### groupmod
+`groupmod [op] groupname`
+- -g, --gid : GID 변경
+- -n, --new-name : 이름 변경
+
+##### groupdel
+- 주 그룹에 존재하는 사용자 없어야 함
+- 있으면 사용자를 삭제한 후 그룹 삭제 가능
+- 파일 중 그룹에 설정된 파일 없어야 함.
+
+##### gpasswd
+- -a, --add user
+- -d, --deleteuser
+- -r, --remove-password group : `newgrp`으로 참가
+- -R, --restrict group
+- -A, --administrators user ... : 관리자 지정
+- -M, --members user : 그룹 맴버 설정
+
+##### newgrp: 그룹 참여
+- 현재 로그인되어있는 세션의 GID 변경
