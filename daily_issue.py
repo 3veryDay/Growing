@@ -1,27 +1,26 @@
 import requests
-from bs4 import BeautifulSoup
 import random
 import os
 
-GITHUB_REPO = "3veryday/Growing"  # ⚠️ 본인 리포 경로로 수정
+GITHUB_REPO = "3veryday/Growing"
 GITHUB_TOKEN = os.environ["IMPLEMENTATION_GH_TOKEN"]
 
-SEARCH_URL = "https://solved.ac/search?query=tag:구현+level:9..10+level:15..16"
+# tag: 구현 (ID 102), level: 9~10 (실2,1) + 15~16 (골5,4)
+API_URL = "https://solved.ac/api/v3/search/problem?query=tag:구현%20(level:9..10%20or%20level:15..16)&sort=random"
 
 def get_random_problem():
-    headers = {"User-Agent": "Mozilla/5.0"}
-    res = requests.get(SEARCH_URL, headers=headers)
-    soup = BeautifulSoup(res.text, "html.parser")
+    res = requests.get(API_URL)
+    data = res.json()
+    items = data.get("items", [])
     
-    links = soup.select("a.css-1ewt4k2")  # 문제 링크가 걸린 <a> 태그
-    problems = [
-        {
-            "title": link.text.strip(),
-            "url": "https://www.acmicpc.net" + link.get("href")
-        }
-        for link in links if "/problem/" in link.get("href")
-    ]
-    return random.choice(problems)
+    if not items:
+        raise ValueError("문제 리스트가 비어 있습니다.")
+
+    problem = items[0]
+    return {
+        "title": f"{problem['problemId']} - {problem['titleKo']}",
+        "url": f"https://www.acmicpc.net/problem/{problem['problemId']}"
+    }
 
 def create_github_issue(title, url):
     api_url = f"https://api.github.com/repos/{GITHUB_REPO}/issues"
