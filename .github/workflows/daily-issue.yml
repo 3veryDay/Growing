@@ -1,8 +1,10 @@
+# .github/workflows/daily-issue.yml
+
 name: Daily Baekjoon Issue
 
 on:
   schedule:
-    - cron: '0 0 * * *'  
+    - cron: '0 15 * * *'  # ✅ 매일 한국시간 자정 실행
   workflow_dispatch:
 
 jobs:
@@ -23,5 +25,5 @@ jobs:
 
     - name: Run script
       env:
-        GH_TOKEN: ${{ secrets.IMPLEMENTATION_GH_TOKEN }}
+        IMPLEMENTATION_GH_TOKEN: ${{ secrets.GH_TOKEN }}  # ✅ GH_TOKEN(secret) → IMPLEMENTATION_GH_TOKEN(env)로 매핑
       run: python daily_issue.py
