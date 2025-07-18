@@ -25,5 +25,5 @@ jobs:
 
     - name: Run script
       env:
-        IMPLEMENTATION_GH_TOKEN: ${{ secrets.GH_TOKEN }}  # ✅ GH_TOKEN(secret) → IMPLEMENTATION_GH_TOKEN(env)로 매핑
+        IMPLEMENTATION_GH_TOKEN: ${{ secrets.IMPLEMENTATION_GH_TOKEN }}  # ✅ GH_TOKEN(secret) → IMPLEMENTATION_GH_TOKEN(env)로 매핑
       run: python daily_issue.py
