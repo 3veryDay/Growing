@@ -4,7 +4,7 @@ import random
 import os
 
 GITHUB_REPO = "3veryday/Growing"  # ⚠️ 본인 리포 경로로 수정
-GITHUB_TOKEN = os.environ["Implementation_GH_TOKEN"]
+GITHUB_TOKEN = os.environ["IMPLEMENTATION_GH_TOKEN"]
 
 SEARCH_URL = "https://solved.ac/search?query=tag:구현+level:9..10+level:15..16"
 
