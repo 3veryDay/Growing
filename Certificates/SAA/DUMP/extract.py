@@ -45,3 +45,4 @@ extract_questions_by_keyword(
     output_file='Certificates\SAA\DUMP\Filtered\Keyword_IAM.txt',
     keywords=['IAM']
 )
+
