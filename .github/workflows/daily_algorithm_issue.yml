@@ -1,13 +1,11 @@
-# .github/workflows/daily_algorithm_issue.yml
-
 name: '🗓️ 오늘의 알고리즘 이슈 생성'
 
 on:
-  # 한국 시간(KST) 기준으로 매일 자정에 실행 (UTC 기준 15:00)
+  # 한국 시간(KST) 기준 월~금 자정에 실행 (UTC 15:00)
   schedule:
-    - cron: '0 15 * * *'
-  
-  # 수동으로 워크플로우를 실행할 수 있도록 버튼 추가
+    - cron: '0 15 * * 1-5'
+
+  # 수동 실행 버튼 추가
   workflow_dispatch:
 
 jobs:
@@ -15,7 +13,7 @@ jobs:
     name: Create Daily Algorithm Issue
     runs-on: ubuntu-latest
     permissions:
-      issues: write # 이슈 생성 권한 부여
+      issues: write
 
     steps:
       - name: 'Set KST Timezone'
@@ -26,70 +24,67 @@ jobs:
       - name: 'Generate Issue Content'
         id: issue_content
         run: |
-          # 36일치 학습 주제 배열
+          # 🎲 섞은 36일치 학습 주제 배열
           TOPICS=(
-            "비트마스킹" "이분 탐색" "그리디 알고리즘" "너비 우선 탐색 (BFS)" "투 포인터" 
-            "유니온-파인드" "DP - 타뷸레이션" "힙/우선순위 큐" "깊이 우선 탐색 (DFS)" "해시" 
-            "슬라이딩 윈도우" "백트래킹" "최단 경로 - 다익스트라" "스택/큐" "트라이" 
-            "위상 정렬" "순열/조합/부분집합" "세그먼트 트리" "최소 신장 트리 - 크루스칼" "DP - 메모이제이션" 
-            "소수 판별 - 에라토스테네스의 체" "효율적인 정렬 (O(N log N))" "유클리드 호제법" "최소 공통 조상 (LCA)" "펜윅 트리" 
-            "KMP 알고리즘" "트리/이진 탐색 트리" "최단 경로 - 플로이드-워셜" "모듈러 연산" "라빈-카프 알고리즘" 
-            "최소 신장 트리 - 프림" "조합론" "계수 정렬" "그래프 기본" "단순 반복/조건문 (Brute Force)" "기본 정렬 (O(N^2))"
+            "유니온-파인드" "트리/이진 탐색 트리" "DP - 타뷸레이션" "소수 판별 - 에라토스테네스의 체" "순열/조합/부분집합"
+            "효율적인 정렬 (O(N log N))" "슬라이딩 윈도우" "최소 신장 트리 - 프림" "위상 정렬" "깊이 우선 탐색 (DFS)"
+            "조합론" "세그먼트 트리" "그리디 알고리즘" "유클리드 호제법" "기본 정렬 (O(N^2))"
+            "트라이" "투 포인터" "라빈-카프 알고리즘" "계수 정렬" "비트마스킹"
+            "최단 경로 - 다익스트라" "스택/큐" "그래프 기본" "백트래킹" "펜윅 트리"
+            "DP - 메모이제이션" "KMP 알고리즘" "너비 우선 탐색 (BFS)" "최소 신장 트리 - 크루스칼" "최소 공통 조상 (LCA)"
+            "모듈러 연산" "이분 탐색" "최단 경로 - 플로이드-워셜" "힙/우선순위 큐" "단순 반복/조건문 (Brute Force)" "해시"
           )
-          
-          # 시작 날짜 설정 (YYYY-MM-DD 형식)
-          START_DATE="2025-09-17"
+
+          # 시작 날짜 (다시 시작 → 오늘로 설정)
+          START_DATE="2025-09-24"
           START_SECONDS=$(date -d "$START_DATE" +%s)
           TODAY_SECONDS=$(date +%s)
           DAYS_SINCE_START=$(( (TODAY_SECONDS - START_SECONDS) / 86400 ))
           TOPIC_INDEX=$(( DAYS_SINCE_START % ${#TOPICS[@]} ))
           TODAY_TOPIC=${TOPICS[$TOPIC_INDEX]}
-          
-          # --- ▼ 주제별 대표 문제 자동 설정 ---
-          
+
+          # --- ▼ 대표 문제 매핑 (필요시 확장 가능) ---
           case "$TODAY_TOPIC" in
-            "비트마스킹")                  PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="발전소"; PROBLEM_LINK="https://www.acmicpc.net/problem/1102" ;;
-            "이분 탐색")                    PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="가장 긴 증가하는 부분 수열 2"; PROBLEM_LINK="https://www.acmicpc.net/problem/12015" ;;
-            "그리디 알고리즘")              PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="보석 도둑"; PROBLEM_LINK="https://www.acmicpc.net/problem/1202" ;;
-            "너비 우선 탐색 (BFS)")       PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="벽 부수고 이동하기 3"; PROBLEM_LINK="https://www.acmicpc.net/problem/16933" ;;
-            "투 포인터")                    PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="고냥이"; PROBLEM_LINK="https://www.acmicpc.net/problem/16472" ;;
-            "유니온-파인드")                PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="친구비"; PROBLEM_LINK="https://www.acmicpc.net/problem/16562" ;;
-            "DP - 타뷸레이션")            PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="양팔저울"; PROBLEM_LINK="https://www.acmicpc.net/problem/2629" ;;
-            "힙/우선순위 큐")              PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="파일 합치기 3"; PROBLEM_LINK="https://www.acmicpc.net/problem/13975" ;;
-            "깊이 우선 탐색 (DFS)")       PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="전단지 돌리기"; PROBLEM_LINK="https://www.acmicpc.net/problem/19542" ;;
-            "해시")                        PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="이중 우선순위 큐"; PROBLEM_LINK="https://www.acmicpc.net/problem/7662" ;;
-            "슬라이딩 윈도우")              PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="문자 해독"; PROBLEM_LINK="https://www.acmicpc.net/problem/1593" ;;
-            "백트래킹")                    PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="다이어트"; PROBLEM_LINK="https://www.acmicpc.net/problem/19942" ;;
-            "최단 경로 - 다익스트라")      PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="파티"; PROBLEM_LINK="https://www.acmicpc.net/problem/1238" ;;
-            "스택/큐")                     PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="오아시스"; PROBLEM_LINK="https://www.acmicpc.net/problem/3015" ;;
-            "트라이")                      PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="개미굴"; PROBLEM_LINK="https://www.acmicpc.net/problem/14725" ;;
-            "위상 정렬")                    PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="게임 개발"; PROBLEM_LINK="https://www.acmicpc.net/problem/1516" ;;
-            "순열/조합/부분집합")            PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="순열의 순서"; PROBLEM_LINK="https://www.acmicpc.net/problem/1722" ;;
-            "세그먼트 트리")                PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="가계부 (Hard)"; PROBLEM_LINK="https://www.acmicpc.net/problem/12837" ;;
-            "최소 신장 트리 - 크루스칼")   PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="별자리 만들기"; PROBLEM_LINK="https://www.acmicpc.net/problem/4386" ;;
-            "DP - 메모이제이션")          PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="행렬 곱셈 순서"; PROBLEM_LINK="https://www.acmicpc.net/problem/11049" ;;
+            "이분 탐색") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="가장 긴 증가하는 부분 수열 2"; PROBLEM_LINK="https://www.acmicpc.net/problem/12015" ;;
+            "그리디 알고리즘") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="보석 도둑"; PROBLEM_LINK="https://www.acmicpc.net/problem/1202" ;;
+            "너비 우선 탐색 (BFS)") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="벽 부수고 이동하기 3"; PROBLEM_LINK="https://www.acmicpc.net/problem/16933" ;;
+            "깊이 우선 탐색 (DFS)") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="전단지 돌리기"; PROBLEM_LINK="https://www.acmicpc.net/problem/19542" ;;
+            "비트마스킹") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="발전소"; PROBLEM_LINK="https://www.acmicpc.net/problem/1102" ;;
+            "투 포인터") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="고냥이"; PROBLEM_LINK="https://www.acmicpc.net/problem/16472" ;;
+            "유니온-파인드") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="친구비"; PROBLEM_LINK="https://www.acmicpc.net/problem/16562" ;;
+            "힙/우선순위 큐") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="파일 합치기 3"; PROBLEM_LINK="https://www.acmicpc.net/problem/13975" ;;
+            "해시") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="이중 우선순위 큐"; PROBLEM_LINK="https://www.acmicpc.net/problem/7662" ;;
+            "슬라이딩 윈도우") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="문자 해독"; PROBLEM_LINK="https://www.acmicpc.net/problem/1593" ;;
+            "백트래킹") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="다이어트"; PROBLEM_LINK="https://www.acmicpc.net/problem/19942" ;;
+            "스택/큐") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="오아시스"; PROBLEM_LINK="https://www.acmicpc.net/problem/3015" ;;
+            "트라이") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="개미굴"; PROBLEM_LINK="https://www.acmicpc.net/problem/14725" ;;
+            "위상 정렬") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="게임 개발"; PROBLEM_LINK="https://www.acmicpc.net/problem/1516" ;;
+            "세그먼트 트리") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="가계부 (Hard)"; PROBLEM_LINK="https://www.acmicpc.net/problem/12837" ;;
+            "최소 신장 트리 - 크루스칼") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="별자리 만들기"; PROBLEM_LINK="https://www.acmicpc.net/problem/4386" ;;
+            "최소 신장 트리 - 프림") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="다리 만들기 2"; PROBLEM_LINK="https://www.acmicpc.net/problem/17472" ;;
+            "최소 공통 조상 (LCA)") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="트리와 쿼리 2"; PROBLEM_LINK="https://www.acmicpc.net/problem/13511" ;;
+            "KMP 알고리즘") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="찾기"; PROBLEM_LINK="https://www.acmicpc.net/problem/1786" ;;
+            "최단 경로 - 다익스트라") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="파티"; PROBLEM_LINK="https://www.acmicpc.net/problem/1238" ;;
+            "최단 경로 - 플로이드-워셜") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="백양로 브레이크"; PROBLEM_LINK="https://www.acmicpc.net/problem/11562" ;;
+            "DP - 타뷸레이션") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="양팔저울"; PROBLEM_LINK="https://www.acmicpc.net/problem/2629" ;;
+            "DP - 메모이제이션") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="행렬 곱셈 순서"; PROBLEM_LINK="https://www.acmicpc.net/problem/11049" ;;
+            "조합론") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="조약돌 꺼내기"; PROBLEM_LINK="https://www.acmicpc.net/problem/13251" ;;
+            "순열/조합/부분집합") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="순열의 순서"; PROBLEM_LINK="https://www.acmicpc.net/problem/1722" ;;
+            "트리/이진 탐색 트리") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="트리의 독립집합"; PROBLEM_LINK="https://www.acmicpc.net/problem/2213" ;;
+            "그래프 기본") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="거짓말"; PROBLEM_LINK="https://www.acmicpc.net/problem/1043" ;;
+            "단순 반복/조건문 (Brute Force)") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="게리맨더링"; PROBLEM_LINK="https://www.acmicpc.net/problem/17471" ;;
+            "기본 정렬 (O(N^2))") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="인싸들의 가위바위보"; PROBLEM_LINK="https://www.acmicpc.net/problem/16986" ;;
             "소수 판별 - 에라토스테네스의 체") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="세 개의 소수 문제"; PROBLEM_LINK="https://www.acmicpc.net/problem/11502" ;;
             "효율적인 정렬 (O(N log N))") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="이차원 배열과 연산"; PROBLEM_LINK="https://www.acmicpc.net/problem/17140" ;;
-            "유클리드 호제법")              PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="직사각형"; PROBLEM_LINK="https://www.acmicpc.net/problem/21573" ;;
-            "최소 공통 조상 (LCA)")       PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="트리와 쿼리 2"; PROBLEM_LINK="https://www.acmicpc.net/problem/13511" ;;
-            "펜윅 트리")                    PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="나무 심기"; PROBLEM_LINK="https://www.acmicpc.net/problem/1280" ;;
-            "KMP 알고리즘")               PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="찾기"; PROBLEM_LINK="https://www.acmicpc.net/problem/1786" ;;
-            "트리/이진 탐색 트리")         PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="트리의 독립집합"; PROBLEM_LINK="https://www.acmicpc.net/problem/2213" ;;
-            "최단 경로 - 플로이드-워셜")  PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="백양로 브레이크"; PROBLEM_LINK="https://www.acmicpc.net/problem/11562" ;;
-            "모듈러 연산")                  PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="Σ (시그마)"; PROBLEM_LINK="https://www.acmicpc.net/problem/13172" ;;
-            "라빈-카프 알고리즘")            PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="시계 사진들"; PROBLEM_LINK="https://www.acmicpc.net/problem/10266" ;;
-            "최소 신장 트리 - 프림")       PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="다리 만들기 2"; PROBLEM_LINK="https://www.acmicpc.net/problem/17472" ;;
-            "조합론")                      PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="조약돌 꺼내기"; PROBLEM_LINK="https://www.acmicpc.net/problem/13251" ;;
-            "계수 정렬")                    PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="2048 (Easy)"; PROBLEM_LINK="https://www.acmicpc.net/problem/12100" ;;
-            "그래프 기본")                  PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="거짓말"; PROBLEM_LINK="https://www.acmicpc.net/problem/1043" ;;
-            "단순 반복/조건문 (Brute Force)") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="게리맨더링"; PROBLEM_LINK="https://www.acmicpc.net/problem/17471" ;;
-            "기본 정렬 (O(N^2))")         PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="인싸들의 가위바위보"; PROBLEM_LINK="https://www.acmicpc.net/problem/16986" ;;
+            "유클리드 호제법") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="직사각형"; PROBLEM_LINK="https://www.acmicpc.net/problem/21573" ;;
+            "펜윅 트리") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="나무 심기"; PROBLEM_LINK="https://www.acmicpc.net/problem/1280" ;;
+            "모듈러 연산") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="Σ (시그마)"; PROBLEM_LINK="https://www.acmicpc.net/problem/13172" ;;
+            "라빈-카프 알고리즘") PROBLEM_TIER="백준 골드 2"; PROBLEM_TITLE="시계 사진들"; PROBLEM_LINK="https://www.acmicpc.net/problem/10266" ;;
           esac
 
-          # 이슈 제목과 본문을 outputs으로 설정
+          # 이슈 제목 & 본문
           echo "ISSUE_TITLE=[$(date +'%Y-%m-%d')] 오늘의 알고리즘: $TODAY_TOPIC" >> "$GITHUB_ENV"
-          
-          # 여러 줄의 본문을 위해 EOF(End Of File) 형식 사용
+
           {
             echo "ISSUE_BODY<<EOF"
             echo "## 🎯 공부할 주제"
@@ -109,9 +104,9 @@ jobs:
             echo ""
             echo "---"
             echo ""
-            echo "## ✅ .. 푼 후 .."
+            echo "## ✅ 푼 후 체크리스트"
             echo "- [ ] 문제 풀이 완료"
-            echo "- [ ] 관련 개념 블로그에 정리하기"
+            echo "- [ ] 관련 개념 블로그/노션 정리하기"
             echo "EOF"
           } >> "$GITHUB_ENV"
 
