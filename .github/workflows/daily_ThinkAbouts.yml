@@ -5,6 +5,9 @@ on:
   schedule:
     - cron: '0 15 * * 1-5'
 
+  # 수동 실행 버튼 추가
+  workflow_dispatch:
+
 jobs:
   create_daily_study:
     name: Create Daily Study Issue
@@ -21,42 +24,37 @@ jobs:
       - name: 'Generate Issue Content'
         id: issue_content
         run: |
-          # 📚 공부할 주제 배열 (전달받은 90+개 주제)
+          # 📚 공부할 주제 배열 (무작위 섞음 완료)
           TOPICS=(
-            "SOP & CORS" "JWT" "OAuth" "대칭키 vs 비대칭키" "XSS" "인증(Authentication) vs 인가(Authorization)"
-            "트랜잭션과 ACID" "정규화(Normalization)" "인덱스 (Clustered vs Non-clustered)" "MySQL의 실행계획"
-            "InnoDB 스토리지 엔진" "DB Lock (Optimistic vs Pessimistic)" "NoSQL" "JOIN의 종류와 원리" "Replication"
-            "B-Tree와 B+Tree (Index)" "Connection Pool" "Trigger" "Covering Index" "Caching Strategy"
-            "Bulk Insert" "Sequence" "Self Relationship"
-            "IOC (Inversion of Control)" "AOP (Aspect Oriented Programming)" "PSA (Portable Service Abstraction)"
-            "Spring MVC 구조" "내장 Tomcat" "Servlet" "Spring Data JDBC" "JPA Persistent Context (영속성 컨텍스트)"
-            "QueryDSL" "Jackson 라이브러리" "Spring Bean 생명주기" "Spring Security 구조" "Annotation Processor"
-            "Profile (@Profile)" "Auto Configure (자동 설정)" "Logger (SLF4J/Logback)" "Actuator" "WebClient"
-            "WebFlux" "Jigsaw (Java Module System)" "Server Sent Event (SSE)" "Flyway (DB 마이그레이션)"
-            "@Transactional 동작 원리" "JUnit 테스트" "동기(Synchronous) vs 비동기(Asynchronous)" "Spring Cloud"
-            "Spring 예외처리 (ExceptionHandler)" "Redis 활용" "Dynamic Proxy vs CGLIB" "Web Polling (Long/Short)"
-            "Filter vs Interceptor" "기본키 생성 전략 (Identity/Sequence/Table)" "Swagger (SpringDoc)"
-            "javac와 컴파일 과정" "접근 제어자(Access Modifier)의 동작 방식" "GC (Garbage Collection) 알고리즘" "null 처리"
-            "String, hashCode(), equals()" "Immutability (불변성)" "Serialization (직렬화)" "JCF (Java Collections Framework)"
-            "Java 예외 처리 계층 (Checked vs Unchecked)" "멀티스레드와 스레드풀" "JVM 메모리 구조 (Stack, Heap, Method)"
-            "Java Stream API" "Optional 활용" "Functional Interface" "Lambda Expression" "Regular Expression (정규표현식)"
-            "Process vs Thread" "Build Tool (Gradle vs Maven)" "Thread Safe 자료구조 (ConcurrentHashMap 등)"
-            "Map 구현체 비교 (HashMap, TreeMap, LinkedHashMap)" "Comparable vs Comparator" "Runnable vs Callable"
-            "Cache Locality" "얕은 복사 vs 깊은 복사" "Reflection API" "Java 버전별 특징 (8, 11, 17, 21)" "Generic"
-            "static 키워드" "final 키워드" "Java Record (Java 14+)" "JMX (Java Management Extensions)"
-            "Boxing/Unboxing" "volatile 키워드"
+            "Redis 활용" "SOP & CORS" "@Transactional 동작 원리" "B-Tree와 B+Tree (Index)" "JVM 메모리 구조 (Stack, Heap, Method)"
+            "Spring MVC 구조" "인덱스 (Clustered vs Non-clustered)" "Java Stream API" "JWT" "대칭키 vs 비대칭키"
+            "Spring Security 구조" "GC (Garbage Collection) 알고리즘" "DB Lock (Optimistic vs Pessimistic)" "WebFlux" "OAuth"
+            "JPA Persistent Context (영속성 컨텍스트)" "멀티스레드와 스레드풀" "트랜잭션과 ACID" "IOC (Inversion of Control)" "NoSQL"
+            "접근 제어자(Access Modifier)의 동작 방식" "Spring Data JDBC" "Replication" "Lambda Expression" "XSS"
+            "QueryDSL" "Connection Pool" "Filter vs Interceptor" "String, hashCode(), equals()" "JOIN의 종류와 원리"
+            "AOP (Aspect Oriented Programming)" "WebClient" "InnoDB 스토리지 엔진" "Optional 활용" "Flyway (DB 마이그레이션)"
+            "MySQL의 실행계획" "Thread Safe 자료구조 (ConcurrentHashMap 등)" "Dynamic Proxy vs CGLIB" "Caching Strategy" "Generic"
+            "Spring Bean 생명주기" "Covering Index" "Jigsaw (Java Module System)" "Map 구현체 비교 (HashMap, TreeMap, LinkedHashMap)" "정규화(Normalization)"
+            "JUnit 테스트" "JCF (Java Collections Framework)" "Actuator" "Sequence" "Process vs Thread"
+            "Web Polling (Long/Short)" "Comparable vs Comparator" "Spring Cloud" "static 키워드" "Trigger"
+            "PSA (Portable Service Abstraction)" "Serialization (직렬화)" "Immutability (불변성)" "내장 Tomcat" "Java 버전별 특징 (8, 11, 17, 21)"
+            "Auto Configure (자동 설정)" "Bulk Insert" "Functional Interface" "Java 예외 처리 계층 (Checked vs Unchecked)" "Logger (SLF4J/Logback)"
+            "Runnable vs Callable" "Servlet" "Spring 예외처리 (ExceptionHandler)" "Cache Locality" "Profile (@Profile)"
+            "Reflection API" "Server Sent Event (SSE)" "동기(Synchronous) vs 비동기(Asynchronous)" "기본키 생성 전략 (Identity/Sequence/Table)" "Jackson 라이브러리"
+            "얕은 복사 vs 깊은 복사" "Annotation Processor" "Regular Expression (정규표현식)" "Build Tool (Gradle vs Maven)" "javac와 컴파일 과정"
+            "null 처리" "Self Relationship" "Swagger (SpringDoc)" "final 키워드" "JMX (Java Management Extensions)"
+            "Boxing/Unboxing" "volatile 키워드" "Java Record (Java 14+)" "인증(Authentication) vs 인가(Authorization)"
           )
 
-          # 시작 날짜 설정 (오늘부터 로테이션 시작하도록 설정)
-          # 만약 특정 순서대로 하고 싶다면 날짜를 고정하세요. (예: 2024-01-01)
+          # 시작 날짜 설정 (오늘부터 로테이션 시작)
           START_DATE="2024-12-11"
           START_SECONDS=$(date -d "$START_DATE" +%s)
           TODAY_SECONDS=$(date +%s)
           
-          # 주말 제외 로직 없이 단순 일자 경과로 계산하려면 아래 사용
+          # 경과 일수 계산
           DAYS_SINCE_START=$(( (TODAY_SECONDS - START_SECONDS) / 86400 ))
           
-          # 배열 크기로 나눈 나머지로 인덱스 결정
+          # 배열 크기로 나눈 나머지로 오늘의 주제 인덱스 결정
           TOPIC_INDEX=$(( DAYS_SINCE_START % ${#TOPICS[@]} ))
           TODAY_TOPIC=${TOPICS[$TOPIC_INDEX]}
 
@@ -105,5 +103,5 @@ jobs:
               repo: context.repo.repo,
               title: process.env.TITLE,
               body: process.env.BODY,
-              labels: ['CS공부', 'TIL', '자동 생성']
+              labels: ['CS공부', 'TIL']
             })
