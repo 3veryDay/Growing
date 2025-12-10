@@ -1,0 +1,109 @@
+name: '🗓️ 오늘의 1시간 공부 주제 생성'
+
+on:
+  # 한국 시간(KST) 기준 월~금 자정에 실행 (UTC 15:00)
+  schedule:
+    - cron: '0 15 * * 1-5'
+
+jobs:
+  create_daily_study:
+    name: Create Daily Study Issue
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: 'Set KST Timezone'
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: 'Asia/Seoul'
+      
+      - name: 'Generate Issue Content'
+        id: issue_content
+        run: |
+          # 📚 공부할 주제 배열 (전달받은 90+개 주제)
+          TOPICS=(
+            "SOP & CORS" "JWT" "OAuth" "대칭키 vs 비대칭키" "XSS" "인증(Authentication) vs 인가(Authorization)"
+            "트랜잭션과 ACID" "정규화(Normalization)" "인덱스 (Clustered vs Non-clustered)" "MySQL의 실행계획"
+            "InnoDB 스토리지 엔진" "DB Lock (Optimistic vs Pessimistic)" "NoSQL" "JOIN의 종류와 원리" "Replication"
+            "B-Tree와 B+Tree (Index)" "Connection Pool" "Trigger" "Covering Index" "Caching Strategy"
+            "Bulk Insert" "Sequence" "Self Relationship"
+            "IOC (Inversion of Control)" "AOP (Aspect Oriented Programming)" "PSA (Portable Service Abstraction)"
+            "Spring MVC 구조" "내장 Tomcat" "Servlet" "Spring Data JDBC" "JPA Persistent Context (영속성 컨텍스트)"
+            "QueryDSL" "Jackson 라이브러리" "Spring Bean 생명주기" "Spring Security 구조" "Annotation Processor"
+            "Profile (@Profile)" "Auto Configure (자동 설정)" "Logger (SLF4J/Logback)" "Actuator" "WebClient"
+            "WebFlux" "Jigsaw (Java Module System)" "Server Sent Event (SSE)" "Flyway (DB 마이그레이션)"
+            "@Transactional 동작 원리" "JUnit 테스트" "동기(Synchronous) vs 비동기(Asynchronous)" "Spring Cloud"
+            "Spring 예외처리 (ExceptionHandler)" "Redis 활용" "Dynamic Proxy vs CGLIB" "Web Polling (Long/Short)"
+            "Filter vs Interceptor" "기본키 생성 전략 (Identity/Sequence/Table)" "Swagger (SpringDoc)"
+            "javac와 컴파일 과정" "접근 제어자(Access Modifier)의 동작 방식" "GC (Garbage Collection) 알고리즘" "null 처리"
+            "String, hashCode(), equals()" "Immutability (불변성)" "Serialization (직렬화)" "JCF (Java Collections Framework)"
+            "Java 예외 처리 계층 (Checked vs Unchecked)" "멀티스레드와 스레드풀" "JVM 메모리 구조 (Stack, Heap, Method)"
+            "Java Stream API" "Optional 활용" "Functional Interface" "Lambda Expression" "Regular Expression (정규표현식)"
+            "Process vs Thread" "Build Tool (Gradle vs Maven)" "Thread Safe 자료구조 (ConcurrentHashMap 등)"
+            "Map 구현체 비교 (HashMap, TreeMap, LinkedHashMap)" "Comparable vs Comparator" "Runnable vs Callable"
+            "Cache Locality" "얕은 복사 vs 깊은 복사" "Reflection API" "Java 버전별 특징 (8, 11, 17, 21)" "Generic"
+            "static 키워드" "final 키워드" "Java Record (Java 14+)" "JMX (Java Management Extensions)"
+            "Boxing/Unboxing" "volatile 키워드"
+          )
+
+          # 시작 날짜 설정 (오늘부터 로테이션 시작하도록 설정)
+          # 만약 특정 순서대로 하고 싶다면 날짜를 고정하세요. (예: 2024-01-01)
+          START_DATE="2024-12-11"
+          START_SECONDS=$(date -d "$START_DATE" +%s)
+          TODAY_SECONDS=$(date +%s)
+          
+          # 주말 제외 로직 없이 단순 일자 경과로 계산하려면 아래 사용
+          DAYS_SINCE_START=$(( (TODAY_SECONDS - START_SECONDS) / 86400 ))
+          
+          # 배열 크기로 나눈 나머지로 인덱스 결정
+          TOPIC_INDEX=$(( DAYS_SINCE_START % ${#TOPICS[@]} ))
+          TODAY_TOPIC=${TOPICS[$TOPIC_INDEX]}
+
+          # 이슈 제목 & 본문 생성
+          echo "ISSUE_TITLE=[$(date +'%Y-%m-%d')] 오늘의 1시간 공부: $TODAY_TOPIC" >> "$GITHUB_ENV"
+
+          {
+            echo "ISSUE_BODY<<EOF"
+            echo "## 🎯 오늘의 공부 주제"
+            echo "# **$TODAY_TOPIC**"
+            echo ""
+            echo "---"
+            echo ""
+            echo "## 💡 핵심 개념 (Definition)"
+            echo "> 한 줄 요약: "
+            echo ""
+            echo "- "
+            echo ""
+            echo "## ⚙️ 동작 원리 / 구조 (Mechanism)"
+            echo "\`\`\`java"
+            echo "// 필요 시 코드 예제 작성"
+            echo "\`\`\`"
+            echo ""
+            echo "## 🆚 장단점 / 비교 (Pros & Cons)"
+            echo "- 장점: "
+            echo "- 단점: "
+            echo "- 비교 대상: "
+            echo ""
+            echo "---"
+            echo ""
+            echo "## 🔗 참고 자료 (References)"
+            echo "- [ ] 공식 문서 확인"
+            echo "- [ ] 블로그 정리 완료"
+            echo "EOF"
+          } >> "$GITHUB_ENV"
+
+      - name: 'Create GitHub Issue'
+        uses: actions/github-script@v7
+        env:
+          TITLE: ${{ env.ISSUE_TITLE }}
+          BODY: ${{ env.ISSUE_BODY }}
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: process.env.TITLE,
+              body: process.env.BODY,
+              labels: ['CS공부', 'TIL', '자동 생성']
+            })
