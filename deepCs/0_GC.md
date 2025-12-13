@@ -63,7 +63,7 @@ GC는 **'약한 세대 가설(Weak Generational Hypothesis)'**을 전제로 설�
 - **구조:** 물리적으로 고정된 Young/Old 영역을 없애고, 전체 힙을 **Region(작은 블록)** 단위로 나눴다. (체스판 구조)
 - **동작 (동적 할당):**
   - 각 Region에게 Eden, Survivor, Old라는 역할을 **동적으로 부여**한다.
-  - 상황에 따라 효율적인 위치로 객체를 재배치(Reallocation)한다.
+  - 상황에 따라 효율적인 위치로 객체를 재배치(Evacuation)한다.
   - **Garbage First:** 이름처럼 쓰레기(Garbage)가 가득 찬 Region을 먼저 파악해 우선적으로 청소한다.
 - **장점:** 전체 힙을 뒤지지 않고 부분적으로 GC를 수행해 STW 시간을 획기적으로 줄이고 예측 가능하다. 대용량 메모리에 적합하다.
 
