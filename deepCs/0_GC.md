@@ -1,7 +1,7 @@
 # Java GC 핵심 요약 및 알고리즘 총정리
 
 ## 1. Java GC(Garbage Collection) 개요
-
+https://www.youtube.com/watch?v=2PIBF92iOvQ&si=vQMWLB8mcAdzl5gA&themeRefresh=1
 ### 핵심 개념
 - **정의:** JVM의 Heap 영역에서 동적으로 할당된 메모리 중, 더 이상 사용되지 않는 객체(Garbage)를 찾아내어 메모리를 회수하는 자동 메모리 관리 기법이다.
 - **대상 판별 (Reachability):**
