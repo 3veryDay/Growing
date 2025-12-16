@@ -4,7 +4,7 @@ on:
   # 한국 시간(KST) 기준 월~금 자정에 실행 (UTC 15:00)
   schedule:
     - cron: '0 15 * * 1-5'
-  # 수동 실행 버튼 추가
+  # 수동 실행 버튼 (오늘 공부 더 하고 싶을 때 누르면 새로운 랜덤 주제 생성)
   workflow_dispatch:
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
         with:
           timezoneLinux: 'Asia/Seoul'
             
-      - name: 'Generate Issue Content'
+      - name: 'Generate Random Issue Content'
         id: issue_content
         run: |
           # 📚 공부할 주제 배열
@@ -44,21 +44,17 @@ jobs:
             "Boxing/Unboxing" "volatile 키워드" "Java Record (Java 14+)" "인증(Authentication) vs 인가(Authorization)"
           )
 
-          # ⚠️ 시작 날짜 설정 (오늘부터 첫 번째 주제 시작)
-          START_DATE="2024-12-16"
+          # 🎲 랜덤 인덱스 생성
+          # 배열의 전체 길이($size)를 구하고, $RANDOM을 그 길이로 나눈 나머지 값을 인덱스로 사용
+          SIZE=${#TOPICS[@]}
+          RANDOM_INDEX=$(($RANDOM % $SIZE))
+          TODAY_TOPIC=${TOPICS[$RANDOM_INDEX]}
           
-          START_SECONDS=$(date -d "$START_DATE" +%s)
-          TODAY_SECONDS=$(date +%s)
-          
-          # 경과 일수 계산 (오늘 = 0일차)
-          DAYS_SINCE_START=$(( (TODAY_SECONDS - START_SECONDS) / 86400 ))
-          
-          # 배열 크기로 나눈 나머지로 오늘의 주제 인덱스 결정
-          TOPIC_INDEX=$(( DAYS_SINCE_START % ${#TOPICS[@]} ))
-          TODAY_TOPIC=${TOPICS[$TOPIC_INDEX]}
+          # 현재 날짜 및 시간 구하기 (제목에 시간까지 포함하면 중복 실행 시 구분이 더 쉬움, 여기선 날짜만 사용)
+          CURRENT_DATE=$(date +'%Y-%m-%d')
 
           # 이슈 제목 & 본문 생성
-          echo "ISSUE_TITLE=[$(date +'%Y-%m-%d')] 오늘의 1시간 공부: $TODAY_TOPIC" >> "$GITHUB_ENV"
+          echo "ISSUE_TITLE=[$CURRENT_DATE] 오늘의 1시간 공부: $TODAY_TOPIC" >> "$GITHUB_ENV"
           {
             echo "ISSUE_BODY<<EOF"
             echo "## 🎯 오늘의 공부 주제"
